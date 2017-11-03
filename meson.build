@@ -1,0 +1,8 @@
+project('life-verse', 'cpp')
+qt5 = import('qt5')
+qt5_dep = dependency('qt5', modules: ['Core', 'Gui', 'Widgets'])
+inc = include_directories('')
+moc_files = qt5.preprocess(moc_headers : 'mainwindow.h', include_directories: inc)
+executable('life-verse', 'main.cpp', 'mainwindow.cpp', moc_files,
+           include_directories: inc,
+           dependencies : qt5_dep)
