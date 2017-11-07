@@ -14,6 +14,7 @@ public:
 
 private:
     QWebEngineView* view;
+    QString html;
 };
 
 #endif // MAINWINDOW_H
