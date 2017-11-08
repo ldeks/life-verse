@@ -1,12 +1,16 @@
 #include "mainwindow.h"
+#include <QCoreApplication>
 #include <QFile>
 #include <QTextStream>
+#include <QRectF>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QGraphicsView(parent)
 {
-  view = new QWebEngineView(this);
-  setCentralWidget(view);
+  view = new QWebEngineView();
+  scene = new QGraphicsScene(this);
+  viewProxy = scene->addWidget(view);
+  setScene(scene);
 
   QFile file("../helloworld.html");
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -16,9 +20,20 @@ MainWindow::MainWindow(QWidget *parent) :
   html = in.readAll();
   view->setHtml(html, QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // view->load(QUrl("http://localhost:3000/helloworld.html"));
-  view->show();
 }
 
 MainWindow::~MainWindow()
 {
+  delete view;
+  QCoreApplication::quit();
+}
+
+void
+MainWindow::resizeEvent(QResizeEvent* e) {
+  viewProxy->setGeometry(QRectF(viewport()->rect()));
+}
+
+void
+MainWindow::closeEvent(QCloseEvent* e) {
+  QCoreApplication::quit();
 }
