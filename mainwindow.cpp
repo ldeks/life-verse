@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
   scene = new QGraphicsScene(this);
   viewProxy = scene->addWidget(view);
   setScene(scene);
+  setMouseTracking(true);
 
   QFile file("../helloworld.html");
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -44,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
   toolbar->setStyleSheet(css);
   toolbarProxy = scene->addWidget(toolbar);
   positionToolbar();
+  toolbarProxy->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -69,4 +71,21 @@ MainWindow::positionToolbar() {
     int width = viewport()->width();
     int height = viewport()->height();
     toolbarProxy->setPos(0.10*width, 0.85*height);
+}
+
+void
+MainWindow::mouseMoveEvent(QMouseEvent* e) {
+  int xLoc = e->pos().x();
+  int yLoc = e->pos().y();
+  int width = viewport()->width();
+  int height = viewport()->height();
+
+  if (((xLoc >= 0.10*width) && (xLoc < 0.20*width)) &&
+      ((yLoc >= 0.85*height) && (yLoc < height))) {
+    toolbarProxy->setVisible(true);
+  } else {
+    toolbarProxy->setVisible(false);
+  }
+
+  QWidget::mouseMoveEvent(e);
 }

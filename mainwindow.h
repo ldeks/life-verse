@@ -22,6 +22,7 @@ public:
 
     void resizeEvent(QResizeEvent* e);
     void closeEvent(QCloseEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
 
 private:
     void positionToolbar();
