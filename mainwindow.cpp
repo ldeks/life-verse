@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
   view->setHtml(html, QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // view->load(QUrl("http://localhost:3000/helloworld.html"));
 
-  toolbar = new QFrame();
+  toolbar = new DarkPopupWidget();
   toolbarLayout = new QHBoxLayout(toolbar);
   bold = new QAction(QIcon("../bold.png"), "&Bold", toolbar);
   boldButton = new QToolButton(toolbar);
@@ -38,14 +38,12 @@ MainWindow::MainWindow(QWidget *parent) :
   toolbarLayout->addWidget(italicButton);
   toolbar->setLayout(toolbarLayout);
 
-  toolbar->setWindowOpacity(0.7);
-  QString css;
-  css += "QFrame { background: dark-gray }";
-  css += "QToolButton:hover { background: DimGray }";
-  toolbar->setStyleSheet(css);
-  toolbarProxy = scene->addWidget(toolbar);
-  positionToolbar();
-  toolbarProxy->setVisible(false);
+  toolbar->addCSS("QToolButton:hover { background: DimGray }");
+  toolbar->addToScene(scene);
+  toolbar->setPositionWeights(0.10, 0.85);
+  toolbar->setXPadding(100);
+  toolbar->setYPadding(300);
+  toolbar->updatePosition(viewport()->width(), viewport()->height());
 }
 
 MainWindow::~MainWindow()
@@ -58,19 +56,12 @@ MainWindow::~MainWindow()
 void
 MainWindow::resizeEvent(QResizeEvent* e) {
   viewProxy->setGeometry(QRectF(viewport()->rect()));
-  positionToolbar();
+  toolbar->updatePosition(viewport()->width(), viewport()->height());
 }
 
 void
 MainWindow::closeEvent(QCloseEvent* e) {
   QCoreApplication::quit();
-}
-
-void
-MainWindow::positionToolbar() {
-    int width = viewport()->width();
-    int height = viewport()->height();
-    toolbarProxy->setPos(0.10*width, 0.85*height);
 }
 
 void
@@ -80,12 +71,7 @@ MainWindow::mouseMoveEvent(QMouseEvent* e) {
   int width = viewport()->width();
   int height = viewport()->height();
 
-  if (((xLoc >= 0.10*width) && (xLoc < 0.20*width)) &&
-      ((yLoc >= 0.85*height) && (yLoc < height))) {
-    toolbarProxy->setVisible(true);
-  } else {
-    toolbarProxy->setVisible(false);
-  }
+  toolbar->updateVisibility(xLoc, yLoc, width, height);
 
   QWidget::mouseMoveEvent(e);
 }

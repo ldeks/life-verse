@@ -12,6 +12,8 @@
 #include <QWebEngineView>
 #include <QWidget>
 
+#include "darkpopupwidget.h"
+
 class MainWindow : public QGraphicsView
 {
     Q_OBJECT
@@ -25,20 +27,17 @@ public:
     void mouseMoveEvent(QMouseEvent* e);
 
 private:
-    void positionToolbar();
-
     QWebEngineView* view;
     QGraphicsProxyWidget* viewProxy;
     QGraphicsScene* scene;
     QString html;
 
-    QFrame* toolbar;
+    DarkPopupWidget* toolbar;
     QHBoxLayout* toolbarLayout;
     QAction* bold;
     QToolButton* boldButton;
     QAction* italic;
     QToolButton* italicButton;
-    QGraphicsProxyWidget* toolbarProxy;
 };
 
 #endif // MAINWINDOW_H
