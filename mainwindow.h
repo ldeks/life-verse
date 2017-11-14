@@ -3,6 +3,7 @@
 
 #include <QAction>
 #include <QCloseEvent>
+#include <QFontComboBox>
 #include <QHBoxLayout>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
@@ -27,17 +28,20 @@ public:
     void mouseMoveEvent(QMouseEvent* e);
 
 private:
+    // The renderer
     QWebEngineView* view;
     QGraphicsProxyWidget* viewProxy;
     QGraphicsScene* scene;
     QString html;
 
+    // The button bar.
     DarkPopupWidget* toolbar;
     QHBoxLayout* toolbarLayout;
     QAction* bold;
     QToolButton* boldButton;
     QAction* italic;
     QToolButton* italicButton;
+    QFontComboBox* fontCombo;
 };
 
 #endif // MAINWINDOW_H

@@ -9,6 +9,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QGraphicsView(parent)
 {
+  // Renderer setup.
   view = new QWebEngineView();
   scene = new QGraphicsScene(this);
   viewProxy = scene->addWidget(view);
@@ -24,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
   view->setHtml(html, QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // view->load(QUrl("http://localhost:3000/helloworld.html"));
 
+  // Toolbar setup.
   toolbar = new DarkPopupWidget();
   toolbarLayout = new QHBoxLayout(toolbar);
   bold = new QAction(QIcon("../bold.png"), "&Bold", toolbar);
@@ -36,11 +38,13 @@ MainWindow::MainWindow(QWidget *parent) :
   italicButton->setAutoRaise(true);
   toolbarLayout->addWidget(boldButton);
   toolbarLayout->addWidget(italicButton);
+  fontCombo = new QFontComboBox(toolbar);
+  toolbarLayout->addWidget(fontCombo);
   toolbar->setLayout(toolbarLayout);
 
   toolbar->addCSS("QToolButton:hover { background: DimGray }");
   toolbar->addToScene(scene);
-  toolbar->setPositionWeights(0.10, 0.85);
+  toolbar->setPositionWeights(0.10, 0.05);
   toolbar->setXPadding(100);
   toolbar->setYPadding(300);
   toolbar->updatePosition(viewport()->width(), viewport()->height());
