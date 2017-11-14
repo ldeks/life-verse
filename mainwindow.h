@@ -8,8 +8,11 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QListView>
 #include <QResizeEvent>
+#include <QStringListModel>
 #include <QToolButton>
+#include <QVBoxLayout>
 #include <QWebEngineView>
 #include <QWidget>
 
@@ -42,6 +45,12 @@ private:
     QAction* italic;
     QToolButton* italicButton;
     QFontComboBox* fontCombo;
+
+    // Service item list.
+    DarkPopupWidget* listWidget;
+    QVBoxLayout* listLayout;
+    QListView* listView;
+    QStringListModel* listModel;
 };
 
 #endif // MAINWINDOW_H

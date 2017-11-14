@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QRectF>
 #include <QString>
+#include <QStringList>
 
 MainWindow::MainWindow(QWidget *parent) :
     QGraphicsView(parent)
@@ -48,12 +49,34 @@ MainWindow::MainWindow(QWidget *parent) :
   toolbar->setXPadding(100);
   toolbar->setYPadding(300);
   toolbar->updatePosition(viewport()->width(), viewport()->height());
+
+  // List setup.
+  listWidget = new DarkPopupWidget();
+  listLayout = new QVBoxLayout(listWidget);
+  listView = new QListView(listWidget);
+  listView->setResizeMode(QListView::Adjust);
+  listView->setLayoutMode(QListView::Batched);
+  listModel = new QStringListModel(listWidget);
+  QStringList serviceItems;
+  serviceItems << "Praise to the Lord" << "Greater" << "Good Good Father" <<
+    "Praise the King" << "Children's Dismissal" <<
+    "Making Wise Decisions: Faith in Action - Rahab" <<  "Blessed Assurance";
+  listModel->setStringList(serviceItems);
+  listView->setModel(listModel);
+  listLayout->addWidget(listView);
+  listWidget->setLayout(listLayout);
+
+  listWidget->addToScene(scene);
+  listWidget->setMinimumSize(200, 400);
+  listWidget->setPositionWeights(0.02, 0.3);
+  listWidget->updatePosition(viewport()->width(), viewport()->height());
 }
 
 MainWindow::~MainWindow()
 {
   delete view;
   delete toolbar;
+  delete listWidget;
   QCoreApplication::quit();
 }
 
@@ -61,6 +84,7 @@ void
 MainWindow::resizeEvent(QResizeEvent* e) {
   viewProxy->setGeometry(QRectF(viewport()->rect()));
   toolbar->updatePosition(viewport()->width(), viewport()->height());
+  listWidget->updatePosition(viewport()->width(), viewport()->height());
 }
 
 void
@@ -76,6 +100,7 @@ MainWindow::mouseMoveEvent(QMouseEvent* e) {
   int height = viewport()->height();
 
   toolbar->updateVisibility(xLoc, yLoc, width, height);
+  listWidget->updateVisibility(xLoc, yLoc, width, height);
 
   QWidget::mouseMoveEvent(e);
 }
