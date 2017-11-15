@@ -7,6 +7,8 @@
 #include <QString>
 #include <QStringList>
 
+#include "deck.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QGraphicsView(parent)
 {
@@ -70,6 +72,9 @@ MainWindow::MainWindow(QWidget *parent) :
   listWidget->setMinimumSize(200, 400);
   listWidget->setPositionWeights(0.02, 0.3);
   listWidget->updatePosition(viewport()->width(), viewport()->height());
+
+  Deck out;
+  out.writeFile();
 }
 
 MainWindow::~MainWindow()
