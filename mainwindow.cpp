@@ -19,14 +19,21 @@ MainWindow::MainWindow(QWidget *parent) :
   setScene(scene);
   setMouseTracking(true);
 
-  QFile file("../helloworld.html");
-  if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    return;
+  //QFile file("../helloworld.html");
+  //if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+  //  return;
 
-  QTextStream in (&file);
-  html = in.readAll();
-  view->setHtml(html, QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+  //QTextStream in (&file);
+  //html = in.readAll();
+  //view->setHtml(html, QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // view->load(QUrl("http://localhost:3000/helloworld.html"));
+
+  Deck defaultDeck;
+  // The QUrl tells it where to go and find Reveal.js.
+  view->setHtml(defaultDeck.genHtml(),
+        QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+  // TODO: Remove. For debugging right now.
+  defaultDeck.writeFile();
 
   // Toolbar setup.
   toolbar = new DarkPopupWidget();
@@ -72,9 +79,6 @@ MainWindow::MainWindow(QWidget *parent) :
   listWidget->setMinimumSize(200, 400);
   listWidget->setPositionWeights(0.02, 0.3);
   listWidget->updatePosition(viewport()->width(), viewport()->height());
-
-  Deck out;
-  out.writeFile();
 }
 
 MainWindow::~MainWindow()

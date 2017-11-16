@@ -15,6 +15,7 @@ public:
   ~Deck();
 
   void setTransition(QString tr);
+  QString genHtml(); // No caching for now.
   void writeFile();
 
 private:

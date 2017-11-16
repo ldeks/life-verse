@@ -11,8 +11,11 @@ Deck::Deck(QObject *parent) :
   fontSize = 100;
   fontUnit = "px";
   opacity = 0.8;
-  sections.append("Say something meaningful....");
+  sections.append("Say something meaningful...");
   sections.append("with Life Verse.");
+  sections.append("It's all you need...");
+  sections.append("and nothing more.");
+  sections.append("With no artificial features<br>or premature optimizations.");
   validTransitions << "none" << "fade" << "slide" << "convex" << "concave"
                    << "zoom";
   transition = validTransitions.at(1);
@@ -30,13 +33,10 @@ Deck::setTransition(QString tr) {
   }
 }
 
-void
-Deck::writeFile() {
-  QFile file (filename);
-  if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    return;
-
-  QTextStream out(&file);
+QString
+Deck::genHtml() {
+  QString ret;
+  QTextStream out(&ret);
 
   // Common "header" stuff.
   out << "<!DOCTYPE html>\n"
@@ -89,6 +89,19 @@ Deck::writeFile() {
       << "  </script>\n"
       << "</body>\n";
   out << "</html>";
+
+  return ret;
+}
+
+void
+Deck::writeFile() {
+  QFile file (filename);
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    return;
+
+  QTextStream out(&file);
+
+  out << genHtml();
 
   file.close();
 }
