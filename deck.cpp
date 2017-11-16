@@ -13,11 +13,21 @@ Deck::Deck(QObject *parent) :
   opacity = 0.8;
   sections.append("Say something meaningful....");
   sections.append("with Life Verse.");
-  transition = fade;
+  validTransitions << "none" << "fade" << "slide" << "convex" << "concave"
+                   << "zoom";
+  transition = validTransitions.at(1);
 }
 
 Deck::~Deck()
 {
+}
+
+void
+Deck::setTransition(QString tr) {
+  // If this fails, you silently get fade. Cry in agony.
+  if (validTransitions.contains(tr, Qt::CaseInsensitive)) {
+    transition = tr.toLower();
+  }
 }
 
 void
@@ -72,7 +82,7 @@ Deck::writeFile() {
       << "    Reveal.initialize({\n"
       << "      controls: false,\n"
       << "      progress: false,\n"
-      << "      transition: 'fade',\n"
+      << "      transition: '" << transition << "',\n"
       << "      width: 1600,\n"
       << "      height: 900,\n"
       << "      });\n"

@@ -14,8 +14,7 @@ public:
   explicit Deck(QObject *parent = 0);
   ~Deck();
 
-  enum TransitionType {none, fade, slide, convex, concave, zoom};
-
+  void setTransition(QString tr);
   void writeFile();
 
 private:
@@ -28,7 +27,8 @@ private:
   QString stillLink;
   QString videoLink;
   QStringList sections;
-  TransitionType transition;
+  QString transition;
+  QStringList validTransitions;
 };
 
 #endif // DECK_H
