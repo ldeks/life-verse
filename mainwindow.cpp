@@ -8,6 +8,7 @@
 #include <QStringList>
 
 #include "deck.h"
+#include "song.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QGraphicsView(parent)
@@ -34,6 +35,25 @@ MainWindow::MainWindow(QWidget *parent) :
         QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // TODO: Remove. For debugging right now.
   defaultDeck.writeFile();
+
+  // TODO: Test song reading.
+  QFile file("../foo.bar");
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    return;
+  QTextStream out (&file);
+  Song fishbowl;
+  fishbowl.loadFromFile("../content/songs/10000-reasons");
+  out << "Title: " << fishbowl.getTitle() << endl;
+  out << "Author: " << fishbowl.getAuthor() << endl;
+  out << "Order: " << fishbowl.getOrder().join(' ') << endl;
+  out << "V1: " << fishbowl.getStanzas("verse 1").join("\n!!!!!\n") << endl;
+  out << endl;
+  out << "V2: " << fishbowl.getStanzas("verse 2").join("\n!!!!!\n") << endl;
+  out << endl;
+  out << "V3: " << fishbowl.getStanzas("verse 3").join("\n!!!!!\n") << endl;
+  out << endl;
+  out << "C1: " << fishbowl.getStanzas("chorus 1").join("\n!!!!!\n") << endl;
+  file.close();
 
   // Toolbar setup.
   toolbar = new DarkPopupWidget();

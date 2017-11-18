@@ -15,13 +15,18 @@ public:
   ~Song();
 
   bool loadFromFile(QString filename);
-  QStringList toDeckSections();
+  //QStringList toDeckSections();
+  QString getTitle() { return title; }
+  QString getAuthor() { return author; }
+  QStringList getOrder() { return order; }
+  QStringList getStanzas(QString key);
 
 private:
   bool hasOpeningTag(QString line, QString tagName = "");
   bool hasClosingTag(QString line, QString tagName = "");
+  QString readTagContents(QString line);
   bool hasSelfClosingTag(QString line, QString tagName = "");
-  QStringList readTag(QString line);
+  QString getSelfClosingTag(QString line);
   
   QString title;
   QString author;

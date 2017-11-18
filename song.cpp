@@ -12,11 +12,19 @@ Song::~Song()
 {
 }
 
+QStringList
+Song::getStanzas(QString key) {
+  if (stanzas.contains(key))
+    return stanzas.value(key);
+  else
+    return QStringList();
+}
+
 bool
 Song::loadFromFile(QString filename) {
   QFile file (filename);
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    return;
+    return false;
 
   QTextStream in(&file);
 
@@ -28,83 +36,112 @@ Song::loadFromFile(QString filename) {
     return false;
 
   // Read contents.
+  QString currentStanza;
+  QString currentSelfClosingTag;
+
   while (!in.atEnd()) {
     QString line = in.readLine();
 
-    // Look for opening tag.
-    if (!hasOpeningTag(line))
-      continue; // Didn't have a tag.
-
-    if (hasOpeningTag(line, "title") {
-      while ((!in.atEnd() && (!hasClosingTag(line, "title"))) {
+    if (hasOpeningTag(line, "title")) {
+      while ((!in.atEnd() && (!hasClosingTag(line, "title")))) {
         line += in.readLine();
       }
-      title = readTag(line).at(0);
+      title = readTagContents(line);
     }
     else if (hasOpeningTag(line, "author")) {
-      while ((!in.atEnd() && (!hasClosingTag(line, "author"))) {
+      while ((!in.atEnd() && (!hasClosingTag(line, "author")))) {
         line += in.readLine();
       }
-      author = readTag(line).at(0);
+      author = readTagContents(line);
    }
    else if (hasOpeningTag(line, "order")) {
-      while ((!in.atEnd() && (!hasClosingTag(line, "order"))) {
+      while ((!in.atEnd() && (!hasClosingTag(line, "order")))) {
         line += in.readLine();
       }
-      QString orderLine = readTag(line).at(0);
-      order = orderLine.split(QRegularExpression("/\s*,\s*/");
+      QString orderLine = readTagContents(line);
+      order = orderLine.split(QRegularExpression("\\s*,\\s*"));
    }
    else if (hasSelfClosingTag(line)) {
-      // TODO: Read until next self closing tag.
+      // Flush old stanza.
+      if (!currentSelfClosingTag.isNull()) {
+        stanzas[currentSelfClosingTag].append(currentStanza.trimmed());
+        currentStanza = QString();
+      }
+
+      if (getSelfClosingTag(line) != currentSelfClosingTag) {
+        // New section.
+        currentSelfClosingTag = getSelfClosingTag(line);
+      }
+   }
+   else if (!currentSelfClosingTag.isNull()) {
+      // Must be in the middle of filling a stanza.
+      // Trim and add fresh new-line to avoid extra whitespace on screen.
+      currentStanza += line.trimmed() + "\n";
    }
   }
 
+  //Flush any remaining data.
+  if (!currentSelfClosingTag.isNull())
+    stanzas[currentSelfClosingTag].append(currentStanza.trimmed());
+
   file.close();
+
+  return true;
 }
 
 bool
 Song::hasOpeningTag(QString line, QString tagName) {
   QString regSeed;
-  regSeed += "/<\s*";
+  regSeed += "<\\s*";
   if (tagName.isEmpty())
-    regSeed += "[\w|\s]*";
+    regSeed += "[\\w|\\s]*";
   else
     regSeed += tagName;
 
-  regSeed += "\s*>/i";
+  regSeed += "\\s*>";
 
+  return line.contains(QRegularExpression(regSeed,
+    QRegularExpression::CaseInsensitiveOption));
 }
 
 bool
 Song::hasClosingTag(QString line, QString tagName) {
   QString regSeed;
-  regSeed += "/<\\\s*";
+  regSeed += "<\\/\\s*";
   if (tagName.isEmpty())
-    regSeed += "[\w|\s]*";
+    regSeed += "[\\w|\\s]*";
   else
     regSeed += tagName;
 
-  regSeed += "\s*>/i";
+  regSeed += "\\s*>";
 
-  return line.contains(QRegularExpression(regSeed));
+  return line.contains(QRegularExpression(regSeed,
+    QRegularExpression::CaseInsensitiveOption));
 }
 
 bool
 Song::hasSelfClosingTag(QString line, QString tagName) {
   QString regSeed;
-  regSeed += "/<\s*";
+  regSeed += "<\\s*";
   if (tagName.isEmpty())
-    regSeed += "[\w|\s]*";
+    regSeed += "[\\w|\\s|-]*";
   else
     regSeed += tagName;
 
-  regSeed += "\s*\\>/i";
+  regSeed += "\\s*\\/>";
 
-  return line.contains(QRegularExpression(regSeed));
+  return line.contains(QRegularExpression(regSeed,
+    QRegularExpression::CaseInsensitiveOption));
 }
 
-QStringList
-Song::readTag(QString line) {
+QString
+Song::readTagContents(QString line) {
+  return line.split(QRegularExpression("<\\/?\\s*[\\w|\\s]*\\s*>"),
+    QString::SkipEmptyParts).at(0);
+}
 
-      return line.split(QRegularExpression("/<\\?\s*[\w|\s]*\s*>/i"));
+QString
+Song::getSelfClosingTag(QString line) {
+  return line.split(QRegularExpression("\\s*[<|\\/]>?\\s*"),
+    QString::SkipEmptyParts).at(0).toLower();
 }
