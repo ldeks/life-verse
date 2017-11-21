@@ -6,6 +6,14 @@
 Song::Song(QObject *parent) :
     QObject(parent)
 {
+  // Build the translation table for order.
+  orderToTagName["v"] = "verse";
+  orderToTagName["c"] = "chorus";
+  orderToTagName["p"] = "pre-chorus";
+  orderToTagName["e"] = "ending";
+  orderToTagName["i"] = "intro";
+  orderToTagName["b"] = "bridge";
+  orderToTagName["o"] = "outro";
 }
 
 Song::~Song()
@@ -58,7 +66,7 @@ Song::loadFromFile(QString filename) {
       while ((!in.atEnd() && (!hasClosingTag(line, "order")))) {
         line += in.readLine();
       }
-      QString orderLine = readTagContents(line);
+      QString orderLine = readTagContents(line).toLower();
       order = orderLine.split(QRegularExpression("\\s*,\\s*"));
    }
    else if (hasSelfClosingTag(line)) {
@@ -144,4 +152,24 @@ QString
 Song::getSelfClosingTag(QString line) {
   return line.split(QRegularExpression("\\s*[<|\\/]>?\\s*"),
     QString::SkipEmptyParts).at(0).toLower();
+}
+
+QStringList
+Song::toDeckSections() {
+  QStringList ret;
+
+  for (int i = 0; i < order.size(); i++) {
+    if ((order.at(i) == "solo") || (order.at(i) == "s")) {
+      ret << "";
+    }
+    else {
+      QString numberPart = order.at(i).mid(1);
+      QString key = orderToTagName[order.at(i).left(1)] + " " + numberPart;
+      if (stanzas.contains(key)) {
+        ret << stanzas[key].replaceInStrings("\n", "<br>");
+      }
+    }
+  }
+
+  return ret;
 }

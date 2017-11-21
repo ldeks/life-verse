@@ -105,3 +105,8 @@ Deck::writeFile() {
 
   file.close();
 }
+
+void
+Deck::setSections(QStringList text) {
+  sections = text;
+}

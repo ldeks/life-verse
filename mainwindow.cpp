@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
   setScene(scene);
   setMouseTracking(true);
 
+  // TODO: Test from hand-edited file.
   //QFile file("../helloworld.html");
   //if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
   //  return;
@@ -29,31 +30,41 @@ MainWindow::MainWindow(QWidget *parent) :
   //view->setHtml(html, QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // view->load(QUrl("http://localhost:3000/helloworld.html"));
 
-  Deck defaultDeck;
+  // TODO: Test Default deck
+  //Deck defaultDeck;
   // The QUrl tells it where to go and find Reveal.js.
-  view->setHtml(defaultDeck.genHtml(),
-        QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+  //view->setHtml(defaultDeck.genHtml(),
+  //      QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // TODO: Remove. For debugging right now.
-  defaultDeck.writeFile();
+  //defaultDeck.writeFile();
 
   // TODO: Test song reading.
-  QFile file("../foo.bar");
-  if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    return;
-  QTextStream out (&file);
-  Song fishbowl;
-  fishbowl.loadFromFile("../content/songs/10000-reasons");
-  out << "Title: " << fishbowl.getTitle() << endl;
-  out << "Author: " << fishbowl.getAuthor() << endl;
-  out << "Order: " << fishbowl.getOrder().join(' ') << endl;
-  out << "V1: " << fishbowl.getStanzas("verse 1").join("\n!!!!!\n") << endl;
-  out << endl;
-  out << "V2: " << fishbowl.getStanzas("verse 2").join("\n!!!!!\n") << endl;
-  out << endl;
-  out << "V3: " << fishbowl.getStanzas("verse 3").join("\n!!!!!\n") << endl;
-  out << endl;
-  out << "C1: " << fishbowl.getStanzas("chorus 1").join("\n!!!!!\n") << endl;
-  file.close();
+  // QFile file("../foo.bar");
+  // if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+  //   return;
+  // QTextStream out (&file);
+  // Song fishbowl;
+  // fishbowl.loadFromFile("../content/songs/10000-reasons");
+  // out << "Title: " << fishbowl.getTitle() << endl;
+  // out << "Author: " << fishbowl.getAuthor() << endl;
+  // out << "Order: " << fishbowl.getOrder().join(' ') << endl;
+  // out << "V1: " << fishbowl.getStanzas("verse 1").join("\n!!!!!\n") << endl;
+  // out << endl;
+  // out << "V2: " << fishbowl.getStanzas("verse 2").join("\n!!!!!\n") << endl;
+  // out << endl;
+  // out << "V3: " << fishbowl.getStanzas("verse 3").join("\n!!!!!\n") << endl;
+  // out << endl;
+  // out << "C1: " << fishbowl.getStanzas("chorus 1").join("\n!!!!!\n") << endl;
+  // file.close();
+
+  // TODO: Test song and deck and view integration. :)
+  Deck greaterDeck;
+  Song greater;
+  greater.loadFromFile("../content/songs/greater");
+  greaterDeck.setSections(greater.toDeckSections());
+  view->setHtml(greaterDeck.genHtml(),
+    QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+  greaterDeck.writeFile();
 
   // Toolbar setup.
   toolbar = new DarkPopupWidget();

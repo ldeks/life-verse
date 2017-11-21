@@ -17,6 +17,7 @@ public:
   void setTransition(QString tr);
   QString genHtml(); // No caching for now.
   void writeFile();
+  void setSections(QStringList text);
 
 private:
   QString filename;

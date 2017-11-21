@@ -15,7 +15,7 @@ public:
   ~Song();
 
   bool loadFromFile(QString filename);
-  //QStringList toDeckSections();
+  QStringList toDeckSections();
   QString getTitle() { return title; }
   QString getAuthor() { return author; }
   QStringList getOrder() { return order; }
@@ -33,6 +33,9 @@ private:
   QStringList order;
   // Tag string as key, slides in a list as value
   QHash<QString, QStringList> stanzas;
+  // A translation table for the order mini language.
+  // E.g. "v" as key, "verse" as value
+  QHash<QString, QString> orderToTagName;
 };
 
 #endif // SONG_H
