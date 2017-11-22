@@ -32,12 +32,12 @@ MainWindow::MainWindow(QWidget *parent) :
   // view->load(QUrl("http://localhost:3000/helloworld.html"));
 
   // TODO: Test Default deck
-  //Deck defaultDeck;
+  Deck defaultDeck;
   // The QUrl tells it where to go and find Reveal.js.
-  //view->setHtml(defaultDeck.genHtml(),
-  //      QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+  view->setHtml(defaultDeck.genHtml(),
+        QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   // TODO: Remove. For debugging right now.
-  //defaultDeck.writeFile();
+  defaultDeck.writeFile();
 
   // TODO: Test song reading.
   // QFile file("../foo.bar");
@@ -59,14 +59,15 @@ MainWindow::MainWindow(QWidget *parent) :
   // file.close();
 
   // TODO: Test song and deck and view integration. :)
-  Deck greaterDeck;
-  Song greater;
-  greater.loadFromFile("../content/songs/greater");
-  greaterDeck.setSections(greater.toDeckSections());
-  greaterDeck.setVideoLink("https://player.vimeo.com/external/188557098.hd.mp4?s=911c1c900d991c43cec89ed87bd2578ca7060d4c&profile_id=174&oauth2_token_id=57447761");
-  view->setHtml(greaterDeck.genHtml(),
-    QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
-  greaterDeck.writeFile();
+  // Deck greaterDeck;
+  // Song greater;
+  // greater.loadFromFile("../content/songs/greater");
+  // greaterDeck.setSections(greater.toDeckSections());
+  // greaterDeck.setStillLink("");
+  // greaterDeck.setVideoLink("https://player.vimeo.com/external/188557098.hd.mp4?s=911c1c900d991c43cec89ed87bd2578ca7060d4c&profile_id=174&oauth2_token_id=57447761");
+  // view->setHtml(greaterDeck.genHtml(),
+  //   QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+  // greaterDeck.writeFile();
 
   // TODO: Test Google Slides integration. Maybe needs embed? something about
   // unsecure script.  The controls failed to load.

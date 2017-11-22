@@ -11,10 +11,9 @@ Deck::Deck(QObject *parent) :
   fontSize = 100;
   fontUnit = "px";
   opacity = 0.8;
-  sections.append("Say something meaningful...");
-  sections.append("with Life Verse.");
-  sections.append("It's all you need...");
-  sections.append("and nothing more.");
+  stillLink = "../geo5.jpg";
+  sections.append("Say something meaningful<br>with Life Verse.");
+  sections.append("It's all you need<br>and nothing more.");
   sections.append("With no artificial features<br>or premature optimizations.");
   validTransitions << "none" << "fade" << "slide" << "convex" << "concave"
                    << "zoom";
@@ -68,9 +67,13 @@ Deck::genHtml() {
 
   // Video background stuff.
   if (!videoLink.isEmpty()) {
-    out <<  "<video width=\"1600\" height=\"900\" autoplay loop>\n"
-        <<  "  <source src=\"" << videoLink << "\" type=\"video/mp4\">\n"
-        <<  "</video>\n";
+    out <<  "      <video width=\"1600\" height=\"900\" autoplay loop>\n"
+        <<  "        <source src=\"" << videoLink << "\" type=\"video/mp4\">\n"
+        <<  "      </video>\n";
+  }
+
+  if (!stillLink.isEmpty()) {
+    out <<  "      <img width=\"1600\" height=\"900\" src=\"geo5.jpg\"/>\n";
   }
   
   // Text section stuff.
