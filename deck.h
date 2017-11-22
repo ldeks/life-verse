@@ -18,6 +18,8 @@ public:
   QString genHtml(); // No caching for now.
   void writeFile();
   void setSections(QStringList text);
+  void setStillLink(QString link) { stillLink = link; }
+  void setVideoLink(QString link) { videoLink = link; }
 
 private:
   QString filename;

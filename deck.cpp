@@ -59,12 +59,12 @@ Deck::genHtml() {
       << "  <div class=\"reveal\">\n"
       << "    <div class=\"slides\">\n";
 
-  // TODO: Video background stuff.
-        //<video width="1600" height="900" autoplay loop>
-        //  <source src="https://player.vimeo.com/external/188557098.hd.mp4?s=911c1c900d991c43cec89ed87bd2578ca7060d4c&profile_id=174&oauth2_token_id=57447761" type="video/mp4">
-
-        //  Your browser does not support the video tag.
-        //</video>
+  // Video background stuff.
+  if (!videoLink.isEmpty()) {
+    out <<  "<video width=\"1600\" height=\"900\" autoplay loop>\n"
+        <<  "  <source src=\"" << videoLink << "\" type=\"video/mp4\">\n"
+        <<  "</video>\n";
+  }
   
   // Text section stuff.
   for (int i = 0; i < sections.length(); i++) {

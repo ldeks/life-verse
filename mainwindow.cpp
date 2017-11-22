@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
   Song greater;
   greater.loadFromFile("../content/songs/greater");
   greaterDeck.setSections(greater.toDeckSections());
+  greaterDeck.setVideoLink("https://player.vimeo.com/external/188557098.hd.mp4?s=911c1c900d991c43cec89ed87bd2578ca7060d4c&profile_id=174&oauth2_token_id=57447761");
   view->setHtml(greaterDeck.genHtml(),
     QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   greaterDeck.writeFile();
