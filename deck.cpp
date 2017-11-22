@@ -51,6 +51,13 @@ Deck::genHtml() {
       << "   color: rgb(" << fontColor.red() << ", " << fontColor.green() << ", " << fontColor.blue() << ");\n"
       << "   opacity: " << opacity << ";\n"
       << "}\n"
+      // Need this section so video spans whole view.
+      // reveal.js themes set this to 95%.
+      << ".reveal img,\n"
+      << ".reveal video,\n"
+      << ".reveal iframe {\n"
+      << "  max-width: 100%;\n"
+      << "  max-height: 100%; }\n"
       << "  </style>\n"
       << "  <title>Reveal.js Lyrics</title>\n"
       << "</head>\n"
@@ -83,8 +90,9 @@ Deck::genHtml() {
       << "      controls: false,\n"
       << "      progress: false,\n"
       << "      transition: '" << transition << "',\n"
-      << "      width: 1600,\n"
+      << "      width: 1600,\n" // Need this to specify desired aspect ratio
       << "      height: 900,\n"
+      << "      margin: 0.0,\n" // Need this to specify no border.
       << "      });\n"
       << "  </script>\n"
       << "</body>\n";
