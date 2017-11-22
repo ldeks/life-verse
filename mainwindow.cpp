@@ -6,6 +6,7 @@
 #include <QRectF>
 #include <QString>
 #include <QStringList>
+#include <QUrl>
 
 #include "deck.h"
 #include "song.h"
@@ -67,6 +68,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
   greaterDeck.writeFile();
 
+  // TODO: Test Google Slides integration. Maybe needs embed? something about
+  // unsecure script.  The controls failed to load.
+  //view->load(QUrl("https://docs.google.com/presentation/d/e/2PACX-1vR98KVEcwhhDH7xVSfkCEQKm3ujGp-S4i-8659EFKb_r59kgoiDxkQoBmdm0J20iGzo-Za8NX1q1fo4/pub?start=true&loop=true&delayms=10000"));
+
   // Toolbar setup.
   toolbar = new DarkPopupWidget();
   toolbarLayout = new QHBoxLayout(toolbar);
@@ -105,6 +110,8 @@ MainWindow::MainWindow(QWidget *parent) :
   listModel->setStringList(serviceItems);
   listView->setModel(listModel);
   listLayout->addWidget(listView);
+  addButton = new QPushButton("+", listWidget);
+  listLayout->addWidget(addButton);
   listWidget->setLayout(listLayout);
 
   listWidget->addToScene(scene);

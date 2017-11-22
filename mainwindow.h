@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QListView>
+#include <QPushButton>
 #include <QResizeEvent>
 #include <QStringListModel>
 #include <QToolButton>
@@ -51,6 +52,7 @@ private:
     QVBoxLayout* listLayout;
     QListView* listView;
     QStringListModel* listModel;
+    QPushButton* addButton;
 };
 
 #endif // MAINWINDOW_H
