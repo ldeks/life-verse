@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "renderer.h"
 #include <QCoreApplication>
 #include <QFile>
 #include <QIcon>
@@ -11,7 +11,7 @@
 #include "deck.h"
 #include "song.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+Renderer::Renderer(QWidget *parent) :
     QGraphicsView(parent)
 {
   // Renderer setup.
@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent) :
   listWidget->updatePosition(viewport()->width(), viewport()->height());
 }
 
-MainWindow::~MainWindow()
+Renderer::~Renderer()
 {
   delete view;
   delete toolbar;
@@ -130,19 +130,19 @@ MainWindow::~MainWindow()
 }
 
 void
-MainWindow::resizeEvent(QResizeEvent* e) {
+Renderer::resizeEvent(QResizeEvent* e) {
   viewProxy->setGeometry(QRectF(viewport()->rect()));
   toolbar->updatePosition(viewport()->width(), viewport()->height());
   listWidget->updatePosition(viewport()->width(), viewport()->height());
 }
 
 void
-MainWindow::closeEvent(QCloseEvent* e) {
+Renderer::closeEvent(QCloseEvent* e) {
   QCoreApplication::quit();
 }
 
 void
-MainWindow::mouseMoveEvent(QMouseEvent* e) {
+Renderer::mouseMoveEvent(QMouseEvent* e) {
   int xLoc = e->pos().x();
   int yLoc = e->pos().y();
   int width = viewport()->width();

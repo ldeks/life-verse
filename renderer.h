@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef RENDERER_H
+#define RENDERER_H
 
 #include <QAction>
 #include <QCloseEvent>
@@ -19,13 +19,13 @@
 
 #include "darkpopupwidget.h"
 
-class MainWindow : public QGraphicsView
+class Renderer : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit Renderer(QWidget *parent = 0);
+    ~Renderer();
 
     void resizeEvent(QResizeEvent* e);
     void closeEvent(QCloseEvent* e);
@@ -55,4 +55,4 @@ private:
     QPushButton* addButton;
 };
 
-#endif // MAINWINDOW_H
+#endif // RENDERER_H
