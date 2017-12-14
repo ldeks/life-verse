@@ -4,9 +4,7 @@
 #include <QIcon>
 #include <QTextStream>
 #include <QRectF>
-#include <QString>
 #include <QStringList>
-#include <QUrl>
 
 #include "deck.h"
 #include "song.h"
@@ -127,6 +125,12 @@ Renderer::~Renderer()
   delete toolbar;
   delete listWidget;
   QCoreApplication::quit();
+}
+
+void
+Renderer::setHtml(const QString& html, const QUrl& url)
+{
+  view->setHtml(html, url);
 }
 
 void

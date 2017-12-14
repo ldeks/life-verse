@@ -11,8 +11,10 @@
 #include <QListView>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QString>
 #include <QStringListModel>
 #include <QToolButton>
+#include <QUrl>
 #include <QVBoxLayout>
 #include <QWebEngineView>
 #include <QWidget>
@@ -30,6 +32,8 @@ public:
     void resizeEvent(QResizeEvent* e);
     void closeEvent(QCloseEvent* e);
     void mouseMoveEvent(QMouseEvent* e);
+
+    void setHtml(const QString& html, const QUrl& url = QUrl());
 
 private:
     // The renderer
