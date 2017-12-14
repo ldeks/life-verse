@@ -21,12 +21,22 @@ MainWindow::MainWindow(QWidget *parent) :
   playlistLayout = new QVBoxLayout(playlistWidget);
   playlistLabel = new QLabel("Playlist", playlistWidget);
   playlistView = new QListView(playlistWidget);
+  playlistView->setAcceptDrops(true);
+  playlistModel = new QStringListModel(playlistWidget);
+  playlistStrings << "Greater" << "Hosanna" << "Wonderful";
+  playlistModel->setStringList(playlistStrings);
+  playlistView->setModel(playlistModel);
   playlistLayout->addWidget(playlistLabel);
   playlistLayout->addWidget(playlistView);
   playlistWidget->setLayout(playlistLayout);
 
   // Media tabs.
   songsList = new QListView(mediaTabs);
+  songsModel = new QFileSystemModel(songsList);
+  songsModel->setRootPath("../content/songs/");
+  songsList->setModel(songsModel);
+  songsList->setRootIndex(songsModel->index("../content/songs/"));
+  songsList->setMovement(QListView::Free);
   bibles = new QWidget(mediaTabs);
   mediaTabs->addTab(songsList, "Songs");
   mediaTabs->addTab(bibles, "Bibles");

@@ -1,9 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QFileSystemModel>
 #include <QLabel>
 #include <QMainWindow>
 #include <QSplitter>
+#include <QStringList>
+#include <QStringListModel>
 #include <QTableView>
 #include <QTabWidget>
 #include <QVBoxLayout>
@@ -30,10 +33,13 @@ class MainWindow : public QMainWindow
     QVBoxLayout* playlistLayout;
     QLabel* playlistLabel;
     QListView* playlistView;
+    QStringListModel* playlistModel;
+    QStringList playlistStrings;
     //Media tabs.
     QTabWidget* mediaTabs;
     //TODO: FilterBar songsFilter;
     QListView* songsList;
+    QFileSystemModel* songsModel;
     QWidget* bibles;
 
     //Right side
