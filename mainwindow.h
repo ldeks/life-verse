@@ -5,14 +5,13 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QSplitter>
-#include <QStringList>
-#include <QStringListModel>
 #include <QTableView>
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include <QWidget>
 
 #include "renderer.h"
+#include "playlist-view.h"
 
 class MainWindow : public QMainWindow
 {
@@ -32,9 +31,7 @@ class MainWindow : public QMainWindow
     QWidget* playlistWidget;
     QVBoxLayout* playlistLayout;
     QLabel* playlistLabel;
-    QListView* playlistView;
-    QStringListModel* playlistModel;
-    QStringList playlistStrings;
+    PlaylistView* playlistView;
     //Media tabs.
     QTabWidget* mediaTabs;
     //TODO: FilterBar songsFilter;

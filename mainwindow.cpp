@@ -20,12 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
   // Playlist
   playlistLayout = new QVBoxLayout(playlistWidget);
   playlistLabel = new QLabel("Playlist", playlistWidget);
-  playlistView = new QListView(playlistWidget);
-  playlistView->setAcceptDrops(true);
-  playlistModel = new QStringListModel(playlistWidget);
-  playlistStrings << "Greater" << "Hosanna" << "Wonderful";
-  playlistModel->setStringList(playlistStrings);
-  playlistView->setModel(playlistModel);
+  playlistView = new PlaylistView(playlistWidget);
   playlistLayout->addWidget(playlistLabel);
   playlistLayout->addWidget(playlistView);
   playlistWidget->setLayout(playlistLayout);
