@@ -18,6 +18,7 @@ Renderer::Renderer(QWidget *parent) :
   viewProxy = scene->addWidget(view);
   setScene(scene);
   setMouseTracking(true);
+  setAcceptDrops(false);
 
   // TODO: Test from hand-edited file.
   //QFile file("../helloworld.html");
