@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QFileSystemModel>
 #include <QLabel>
 #include <QMainWindow>
 #include <QSplitter>
@@ -12,6 +11,7 @@
 
 #include "renderer.h"
 #include "playlist-view.h"
+#include "songslist.h"
 
 class MainWindow : public QMainWindow
 {
@@ -34,9 +34,7 @@ class MainWindow : public QMainWindow
     PlaylistView* playlistView;
     //Media tabs.
     QTabWidget* mediaTabs;
-    //TODO: FilterBar songsFilter;
-    QListView* songsList;
-    QFileSystemModel* songsModel;
+    SongsList* songsList;
     QWidget* bibles;
 
     //Right side

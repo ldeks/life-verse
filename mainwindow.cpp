@@ -26,12 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
   playlistWidget->setLayout(playlistLayout);
 
   // Media tabs.
-  songsList = new QListView(mediaTabs);
-  songsModel = new QFileSystemModel(songsList);
-  songsModel->setRootPath("../content/songs/");
-  songsList->setModel(songsModel);
-  songsList->setRootIndex(songsModel->index("../content/songs/"));
-  songsList->setMovement(QListView::Free);
+  songsList = new SongsList(mediaTabs);
   bibles = new QWidget(mediaTabs);
   mediaTabs->addTab(songsList, "Songs");
   mediaTabs->addTab(bibles, "Bibles");
