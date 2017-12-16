@@ -3,13 +3,12 @@
 PlaylistView::PlaylistView(QWidget *parent) :
     QListView(parent)
 {
-  setAcceptDrops(true);
   setMovement(QListView::Free);
   setResizeMode(QListView::Adjust);
   model = new QStringListModel(this);
-  strings << "Greater" << "Hosanna" << "Wonderful";
   model->setStringList(strings);
   setModel(model);
+  setAcceptDrops(true);
 }
 
 PlaylistView::~PlaylistView()
@@ -17,8 +16,21 @@ PlaylistView::~PlaylistView()
 }
 
 void
+PlaylistView::dragEnterEvent(QDragEnterEvent* e)
+{
+  e->acceptProposedAction();
+}
+
+void
+PlaylistView::dragMoveEvent(QDragMoveEvent* e)
+{
+  e->acceptProposedAction();
+}
+
+void
 PlaylistView::dropEvent(QDropEvent* e)
 {
+  strings << e->mimeData()->text();
   model->setStringList(strings);
   e->acceptProposedAction();
 }

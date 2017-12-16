@@ -15,6 +15,8 @@ class PlaylistView : public QListView
     explicit PlaylistView(QWidget *parent = 0);
     ~PlaylistView();
 
+    void dragEnterEvent(QDragEnterEvent* e);
+    void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
 
   private:
