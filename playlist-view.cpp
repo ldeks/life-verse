@@ -30,7 +30,17 @@ PlaylistView::dragMoveEvent(QDragMoveEvent* e)
 void
 PlaylistView::dropEvent(QDropEvent* e)
 {
-  strings << e->mimeData()->text();
+  Song* song = new Song();
+  //QUrl url = e->mimeData()->text();
+  //QString str = url.toLocalFile();
+  QString str = e->mimeData()->text().mid(7);
+  if (!song->loadFromFile(str)) {
+    delete song;
+    return;
+  }
+
+  strings << song->getTitle();
   model->setStringList(strings);
   e->acceptProposedAction();
+  emit haveSong(song);
 }

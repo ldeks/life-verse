@@ -7,6 +7,8 @@
 #include <QStringList>
 #include <QStringListModel>
 
+#include "song.h"
+
 class PlaylistView : public QListView
 {
     Q_OBJECT
@@ -18,6 +20,9 @@ class PlaylistView : public QListView
     void dragEnterEvent(QDragEnterEvent* e);
     void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
+
+  signals:
+    void haveSong(Song* song);
 
   private:
     QStringListModel* model;
