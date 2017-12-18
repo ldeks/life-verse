@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "deck.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -44,8 +45,20 @@ MainWindow::MainWindow(QWidget *parent) :
   lyricsView = new QTableView(lyricsWidget);
   lyricsLayout->addWidget(lyricsLabel);
   lyricsLayout->addWidget(lyricsView);
+
+  connect(playlistView, &PlaylistView::songSelected,
+          this, &MainWindow::previewRenderSong);
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void
+MainWindow::previewRenderSong(Song* song)
+{
+  Deck songDeck;
+  songDeck.setSections(song->toDeckSections());
+  previewRenderer->setHtml(songDeck.genHtml(),
+    QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
 }

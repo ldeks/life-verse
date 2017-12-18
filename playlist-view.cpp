@@ -9,6 +9,8 @@ PlaylistView::PlaylistView(QWidget *parent) :
   model->setStringList(strings);
   setModel(model);
   setAcceptDrops(true);
+
+  connect(this, &PlaylistView::clicked, this, &PlaylistView::serveSong);
 }
 
 PlaylistView::~PlaylistView()
@@ -40,5 +42,13 @@ PlaylistView::dropEvent(QDropEvent* e)
   songs.append(song);
   strings << song->getTitle();
   model->setStringList(strings);
+  setCurrentIndex(model->index(strings.size() - 1));
+  emit songSelected(song);
   e->acceptProposedAction();
+}
+
+void
+PlaylistView::serveSong(const QModelIndex &index)
+{
+  emit songSelected(songs.at(index.row()));
 }

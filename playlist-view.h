@@ -22,6 +22,12 @@ class PlaylistView : public QListView
     void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
 
+  protected slots:
+    void serveSong(const QModelIndex &index);
+
+  signals:
+    void songSelected(Song* song);
+
   private:
     QStringListModel* model;
     QStringList strings;
