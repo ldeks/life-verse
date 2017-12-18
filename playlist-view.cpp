@@ -31,16 +31,14 @@ void
 PlaylistView::dropEvent(QDropEvent* e)
 {
   Song* song = new Song();
-  //QUrl url = e->mimeData()->text();
-  //QString str = url.toLocalFile();
   QString str = e->mimeData()->text().mid(7);
   if (!song->loadFromFile(str)) {
     delete song;
     return;
   }
 
+  songs.append(song);
   strings << song->getTitle();
   model->setStringList(strings);
   e->acceptProposedAction();
-  emit haveSong(song);
 }

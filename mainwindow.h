@@ -21,9 +21,6 @@ class MainWindow : public QMainWindow
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-  public slots:
-    void catchSong(Song* song);
-
   private:
     //Central widget
     QSplitter* mainSplitter;

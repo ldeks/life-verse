@@ -6,6 +6,7 @@
 #include <QMimeData>
 #include <QStringList>
 #include <QStringListModel>
+#include <QVector>
 
 #include "song.h"
 
@@ -21,12 +22,10 @@ class PlaylistView : public QListView
     void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
 
-  signals:
-    void haveSong(Song* song);
-
   private:
     QStringListModel* model;
     QStringList strings;
+    QVector<Song*> songs;
 };
 
 #endif // PLAYLISTVIEW_H

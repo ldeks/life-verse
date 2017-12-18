@@ -44,18 +44,8 @@ MainWindow::MainWindow(QWidget *parent) :
   lyricsView = new QTableView(lyricsWidget);
   lyricsLayout->addWidget(lyricsLabel);
   lyricsLayout->addWidget(lyricsView);
-
-  connect(playlistView, &PlaylistView::haveSong,
-          this, &MainWindow::catchSong);
 }
 
 MainWindow::~MainWindow()
 {
-}
-
-void
-MainWindow::catchSong(Song* song)
-{
-  // Just delete it for now.
-  delete song;
 }
