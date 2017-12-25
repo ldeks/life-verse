@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QSplitter>
+#include <QStandardItemModel>
 #include <QTableView>
 #include <QTabWidget>
 #include <QVBoxLayout>
@@ -46,6 +47,9 @@ class MainWindow : public QMainWindow
     QVBoxLayout* lyricsLayout;
     QLabel* lyricsLabel;
     QTableView* lyricsView;
+    QStandardItemModel* lyricsModel;
+    QStringList lyricsList;
+    QStringList orderList;
     //TODO: Various toolbars here.
     Renderer* previewRenderer;
 };
