@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QSplitter>
 #include <QTabWidget>
+#include <QUrl>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -22,8 +23,11 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
   public slots:
-    void previewRenderSong(Song* song);
+    void renderSong(Song* song);
     void setLyrics(Song* song);
+
+  signals:
+    void syncHtml(QString html, QUrl url);
 
   private:
     //Central widget

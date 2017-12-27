@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
   rightSplitter->addWidget(previewRenderer);
 
   connect(playlistView, &PlaylistView::songSelected,
-          this, &MainWindow::previewRenderSong);
+          this, &MainWindow::renderSong);
   connect(playlistView, &PlaylistView::songSelected,
           this, &MainWindow::setLyrics);
 }
@@ -49,12 +49,14 @@ MainWindow::~MainWindow()
 }
 
 void
-MainWindow::previewRenderSong(Song* song)
+MainWindow::renderSong(Song* song)
 {
   Deck songDeck;
   songDeck.setSections(song->toDeckSections());
-  previewRenderer->setHtml(songDeck.genHtml(),
-    QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+  QString html = songDeck.genHtml();
+  QUrl url = QUrl::fromLocalFile("/home/laura/programming/life-verse/");
+  previewRenderer->setHtml(html, url);
+  emit syncHtml(html, url);
 }
 
 void
