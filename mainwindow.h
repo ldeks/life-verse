@@ -4,13 +4,12 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QSplitter>
-#include <QStandardItemModel>
-#include <QTableView>
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include <QWidget>
 
 #include "renderer.h"
+#include "lyricswidget.h"
 #include "playlist-view.h"
 #include "songslist.h"
 
@@ -43,13 +42,7 @@ class MainWindow : public QMainWindow
 
     //Right side
     QSplitter* rightSplitter;
-    QWidget* lyricsWidget;
-    QVBoxLayout* lyricsLayout;
-    QLabel* lyricsLabel;
-    QTableView* lyricsView;
-    QStandardItemModel* lyricsModel;
-    QStringList lyricsList;
-    QStringList orderList;
+    LyricsWidget* lyricsWidget;
     //TODO: Various toolbars here.
     Renderer* previewRenderer;
 };
