@@ -34,25 +34,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Right side.
   lyricsWidget = new LyricsWidget(rightSplitter);
-  // Fake in some lyrics to test setLyrics.
-  QStringList demoLyrics;
-  QStringList demoOrder;
-  demoLyrics << "Greater is the one\nliving inside of me"
-             << "Than he who is\nliving in the world";
-  demoOrder << "C1" << "C1";
-  lyricsWidget->setLyrics(demoLyrics, demoOrder);
-  demoLyrics << "Bring your doubt\nbring your shame"
-             << "Bring your hurt\nand all your pain"
-             << "Don't you know\nthat's not your name"
-             << "You will always be\nmuch more to me.";
-  demoOrder << "V1" << "V1" << "V1" << "V1";
-  lyricsWidget->setLyrics(demoLyrics, demoOrder);
   previewRenderer = new Renderer(rightSplitter);
   rightSplitter->addWidget(lyricsWidget);
   rightSplitter->addWidget(previewRenderer);
 
   connect(playlistView, &PlaylistView::songSelected,
           this, &MainWindow::previewRenderSong);
+  connect(playlistView, &PlaylistView::songSelected,
+          this, &MainWindow::setLyrics);
 }
 
 MainWindow::~MainWindow()
@@ -66,4 +55,10 @@ MainWindow::previewRenderSong(Song* song)
   songDeck.setSections(song->toDeckSections());
   previewRenderer->setHtml(songDeck.genHtml(),
     QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+}
+
+void
+MainWindow::setLyrics(Song* song)
+{
+  lyricsWidget->setLyrics(song->toLyricSections(), song->getLyricOrder());
 }

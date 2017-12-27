@@ -23,6 +23,7 @@ class MainWindow : public QMainWindow
 
   public slots:
     void previewRenderSong(Song* song);
+    void setLyrics(Song* song);
 
   private:
     //Central widget

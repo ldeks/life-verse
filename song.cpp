@@ -156,6 +156,22 @@ Song::getSelfClosingTag(QString line) {
 
 QStringList
 Song::toDeckSections() {
+  QStringList ret = toLyricSections();
+  for (int i = 0; i < ret.size(); i++) {
+    ret[i] = ret[i].replace("\n", "<br>");
+  }
+  return ret;
+}
+
+QString
+Song::getKey(QString orderCode)
+{
+  QString numberPart = orderCode.mid(1);
+  return orderToTagName[orderCode.left(1)] + " " + numberPart;
+}
+
+QStringList
+Song::toLyricSections() {
   QStringList ret;
 
   for (int i = 0; i < order.size(); i++) {
@@ -163,10 +179,31 @@ Song::toDeckSections() {
       ret << "";
     }
     else {
-      QString numberPart = order.at(i).mid(1);
-      QString key = orderToTagName[order.at(i).left(1)] + " " + numberPart;
+      QString key = getKey(order.at(i));
       if (stanzas.contains(key)) {
-        ret << stanzas[key].replaceInStrings("\n", "<br>");
+        ret << stanzas[key];
+      }
+    }
+  }
+
+  return ret;
+}
+
+QStringList
+Song::getLyricOrder()
+{
+  QStringList ret;
+
+  for (int i = 0; i < order.size(); i++) {
+    if ((order.at(i) == "solo") || (order.at(i) == "s")) {
+      ret << "solo";
+    }
+    else {
+      QString key = getKey(order.at(i));
+      if (stanzas.contains(key)) {
+        for (int j = 0; j < stanzas[key].size(); j++) {
+          ret << order.at(i);
+        }
       }
     }
   }

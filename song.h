@@ -16,6 +16,8 @@ public:
 
   bool loadFromFile(QString filename);
   QStringList toDeckSections();
+  QStringList toLyricSections(); // unrolled
+  QStringList getLyricOrder(); // unrolled
   QString getTitle() { return title; }
   QString getAuthor() { return author; }
   QStringList getOrder() { return order; }
@@ -27,6 +29,7 @@ private:
   QString readTagContents(QString line);
   bool hasSelfClosingTag(QString line, QString tagName = "");
   QString getSelfClosingTag(QString line);
+  QString getKey(QString orderCode);
   
   QString title;
   QString author;
