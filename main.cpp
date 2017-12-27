@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     r.show();
 
     MainWindow m;
+    m.setMainRenderer(&r);
     m.show();
 
     QObject::connect(&m, &MainWindow::syncHtml, &r, &Renderer::setHtml);

@@ -1,7 +1,9 @@
 #include "lyricswidget.h"
 
+#include <QKeyEvent>
 #include <QHeaderView>
 #include <QStandardItem>
+#include <QApplication>
 
 LyricsWidget::LyricsWidget(QWidget *parent) :
     QWidget(parent)
@@ -11,6 +13,7 @@ LyricsWidget::LyricsWidget(QWidget *parent) :
   setLayout(lyricsLayout);
   lyricsLabel = new QLabel("Lyrics", this);
   lyricsView = new QTableView(this);
+  lyricsView->installEventFilter(this);
 
   lyricsModel = NULL;
   lyricsView->horizontalHeader()->hide();
@@ -52,5 +55,29 @@ LyricsWidget::setLyrics(QStringList lyrics, QStringList order)
   for (int i = 0; i < lyricsList.size(); i++) {
     int nrows = lyricsList.at(i).count("\n") + 1;
     lyricsView->setRowHeight(i, baseRowHeight*nrows*0.75);
+  }
+
+  lyricsView->selectRow(0);
+}
+
+bool
+LyricsWidget::eventFilter(QObject* watched, QEvent* event)
+{
+  if ((watched == lyricsView) && (event->type() == QEvent::KeyPress)) {
+     QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+     int key = keyEvent->key();
+     switch (key) {
+       case Qt::Key_Down:
+         emit simpleKeyPress(key);
+         break;
+       case Qt::Key_Up:
+         emit simpleKeyPress(key);
+         break;
+     }
+
+     return false;
+  }
+  else {
+    return QWidget::eventFilter(watched, event);
   }
 }

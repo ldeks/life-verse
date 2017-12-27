@@ -16,8 +16,13 @@ class LyricsWidget : public QWidget
     explicit LyricsWidget(QWidget *parent = 0);
     ~LyricsWidget();
 
+    bool eventFilter(QObject* watched, QEvent* event);
+
   public slots:
     void setLyrics(QStringList lyrics, QStringList order);
+
+  signals:
+    void simpleKeyPress(int key);
 
   private:
     QWidget* lyricsWidget;

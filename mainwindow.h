@@ -22,14 +22,20 @@ class MainWindow : public QMainWindow
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void setMainRenderer(Renderer* r) { mainRenderer = r; }
+
   public slots:
     void renderSong(Song* song);
     void setLyrics(Song* song);
+    void transferSimpleKeyPress(int key);
 
   signals:
     void syncHtml(QString html, QUrl url);
 
   private:
+    //External
+    Renderer* mainRenderer; // Does NOT own!
+
     //Central widget
     QSplitter* mainSplitter;
 

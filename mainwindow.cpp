@@ -1,8 +1,12 @@
 #include "mainwindow.h"
+
+#include <QApplication>
+#include <QKeyEvent>
+
 #include "deck.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QMainWindow(parent), mainRenderer(NULL)
 {
   // Central Widget
   mainSplitter = new QSplitter(this);
@@ -42,6 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
           this, &MainWindow::renderSong);
   connect(playlistView, &PlaylistView::songSelected,
           this, &MainWindow::setLyrics);
+  connect(lyricsWidget, &LyricsWidget::simpleKeyPress,
+          this, &MainWindow::transferSimpleKeyPress);
 }
 
 MainWindow::~MainWindow()
@@ -63,4 +69,23 @@ void
 MainWindow::setLyrics(Song* song)
 {
   lyricsWidget->setLyrics(song->toLyricSections(), song->getLyricOrder());
+}
+
+void
+MainWindow::transferSimpleKeyPress(int key)
+{
+   // Translate between lyrics menu and reveal.js.
+   switch (key) {
+     case (Qt::Key_Down):
+       key = Qt::Key_Right;
+       break;
+     case (Qt::Key_Up):
+       key = Qt::Key_Left;
+       break;
+   }
+   // Must be separate because sendEvent takes ownership.
+   QKeyEvent previewRendererKey (QEvent::KeyPress, key, Qt::NoModifier);
+   QApplication::sendEvent(previewRenderer, &previewRendererKey);
+   QKeyEvent rendererKey (QEvent::KeyPress, key, Qt::NoModifier);
+   QApplication::sendEvent(mainRenderer, &rendererKey);
 }
