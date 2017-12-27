@@ -16,6 +16,9 @@ class LyricsWidget : public QWidget
     explicit LyricsWidget(QWidget *parent = 0);
     ~LyricsWidget();
 
+  public slots:
+    void setLyrics(QStringList lyrics, QStringList order);
+
   private:
     QWidget* lyricsWidget;
     QVBoxLayout* lyricsLayout;
@@ -24,6 +27,7 @@ class LyricsWidget : public QWidget
     QStandardItemModel* lyricsModel;
     QStringList lyricsList;
     QStringList orderList;
+    int baseRowHeight;
 };
 
 #endif // LYRICSWIDGET_H

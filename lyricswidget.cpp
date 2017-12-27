@@ -11,21 +11,10 @@ LyricsWidget::LyricsWidget(QWidget *parent) :
   setLayout(lyricsLayout);
   lyricsLabel = new QLabel("Lyrics", this);
   lyricsView = new QTableView(this);
-  lyricsList << "We wish you\na Merry Christmas\nWe wish you\na Merry Christmas"
-             << "We wish you\na Merry Christmas\nAnd a happy new year!";
-  orderList << "C1" << "C1";
-  lyricsModel = new QStandardItemModel(2, 1, this);
-  lyricsModel->setItem(0, 0, new QStandardItem(lyricsList.at(0)));
-  lyricsModel->setItem(1, 0, new QStandardItem(lyricsList.at(1)));
-  lyricsView->setModel(lyricsModel);
+
+  lyricsModel = NULL;
   lyricsView->horizontalHeader()->hide();
   lyricsView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-  lyricsModel->setVerticalHeaderLabels(orderList);
-  for (int i = 0; i < lyricsView->verticalHeader()->count(); i++) {
-    int nrows = lyricsList.at(i).count("\n") + 1;
-    lyricsView->setRowHeight(i, lyricsView->rowHeight(i)*nrows*0.75);
-  }
-  lyricsView->verticalHeader();
   lyricsLayout->addWidget(lyricsLabel);
   lyricsLayout->addWidget(lyricsView);
 
@@ -33,4 +22,35 @@ LyricsWidget::LyricsWidget(QWidget *parent) :
 
 LyricsWidget::~LyricsWidget()
 {
+}
+
+void
+LyricsWidget::setLyrics(QStringList lyrics, QStringList order)
+{
+  lyricsList = lyrics;
+  orderList = order;
+  bool firstTime = false;
+  if (lyricsModel) {
+    delete lyricsModel;
+  }
+  else {
+    firstTime = true;
+  }
+
+  lyricsModel = new QStandardItemModel(lyricsList.size(), 1, this);
+  for (int i = 0; i < lyricsList.size(); i++) {
+    lyricsModel->setItem(i, 0, new QStandardItem(lyricsList.at(i)));
+  }
+
+  lyricsModel->setVerticalHeaderLabels(orderList);
+  lyricsView->setModel(lyricsModel);
+
+  // Have to set model first.
+  if (firstTime) {
+    baseRowHeight = lyricsView->rowHeight(0);
+  }
+  for (int i = 0; i < lyricsList.size(); i++) {
+    int nrows = lyricsList.at(i).count("\n") + 1;
+    lyricsView->setRowHeight(i, baseRowHeight*nrows*0.75);
+  }
 }
