@@ -21,6 +21,8 @@ LyricsWidget::LyricsWidget(QWidget *parent) :
   lyricsLayout->addWidget(lyricsLabel);
   lyricsLayout->addWidget(lyricsView);
 
+  connect(lyricsView, &QTableView::clicked,
+          this, &LyricsWidget::indexSelected);
 }
 
 LyricsWidget::~LyricsWidget()
@@ -80,4 +82,10 @@ LyricsWidget::eventFilter(QObject* watched, QEvent* event)
   else {
     return QWidget::eventFilter(watched, event);
   }
+}
+
+void
+LyricsWidget::indexSelected(const QModelIndex &idx)
+{
+  emit slideSelected(idx.row());
 }

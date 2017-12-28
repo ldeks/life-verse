@@ -28,6 +28,7 @@ class MainWindow : public QMainWindow
     void renderSong(Song* song);
     void setLyrics(Song* song);
     void transferSimpleKeyPress(int key);
+    void transferMouseClick(int idx);
 
   signals:
     void syncHtml(QString html, QUrl url);

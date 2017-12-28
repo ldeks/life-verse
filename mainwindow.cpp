@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QKeyEvent>
+#include <QVector>
 
 #include "deck.h"
 
@@ -48,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
           this, &MainWindow::setLyrics);
   connect(lyricsWidget, &LyricsWidget::simpleKeyPress,
           this, &MainWindow::transferSimpleKeyPress);
+  connect(lyricsWidget, &LyricsWidget::slideSelected,
+          this, &MainWindow::transferMouseClick);
 }
 
 MainWindow::~MainWindow()
@@ -88,4 +91,20 @@ MainWindow::transferSimpleKeyPress(int key)
    QApplication::sendEvent(previewRenderer, &previewRendererKey);
    QKeyEvent rendererKey (QEvent::KeyPress, key, Qt::NoModifier);
    QApplication::sendEvent(mainRenderer, &rendererKey);
+}
+
+void
+MainWindow::transferMouseClick(int idx)
+{
+   QVector<Renderer*> rvec;
+   rvec.append(previewRenderer);
+   rvec.append(mainRenderer);
+   for (int i = 0; i < 2; i++) {
+     QKeyEvent home (QEvent::KeyPress, Qt::Key_Home, Qt::NoModifier);
+     QApplication::sendEvent(rvec.at(i), &home);
+     for (int j = 0; j < idx; j++) {
+       QKeyEvent right (QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
+       QApplication::sendEvent(rvec.at(i), &right);
+     }
+   }
 }

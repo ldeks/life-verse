@@ -20,9 +20,11 @@ class LyricsWidget : public QWidget
 
   public slots:
     void setLyrics(QStringList lyrics, QStringList order);
+    void indexSelected(const QModelIndex &idx);
 
   signals:
     void simpleKeyPress(int key);
+    void slideSelected(int idx);
 
   private:
     QWidget* lyricsWidget;
