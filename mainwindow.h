@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "filmstrip.h"
 #include "renderer.h"
 #include "lyricswidget.h"
 #include "playlist-view.h"
@@ -57,6 +58,7 @@ class MainWindow : public QMainWindow
     LyricsWidget* lyricsWidget;
     //TODO: Various toolbars here.
     Renderer* previewRenderer;
+    Filmstrip* filmstrip;
 };
 
 #endif // MAINWINDOW_H

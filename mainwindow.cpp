@@ -40,8 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
   // Right side.
   lyricsWidget = new LyricsWidget(rightSplitter);
   previewRenderer = new Renderer(rightSplitter);
+  filmstrip = new Filmstrip(rightSplitter);
   rightSplitter->addWidget(lyricsWidget);
   rightSplitter->addWidget(previewRenderer);
+  rightSplitter->addWidget(filmstrip);
 
   connect(playlistView, &PlaylistView::songSelected,
           this, &MainWindow::renderSong);
