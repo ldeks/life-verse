@@ -8,6 +8,7 @@ Filmstrip::Filmstrip(QWidget *parent) :
   setFlow(QListView::LeftToRight);
   setUniformItemSizes(true);
   setIconSize(QSize(250, 141));
+  setMaximumHeight(150);
 
   dir = QDir("../content/images/");
   QStringList imgExts;
