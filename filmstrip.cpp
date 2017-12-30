@@ -1,7 +1,5 @@
 #include "filmstrip.h"
 
-#include <QStringList>
-
 Filmstrip::Filmstrip(QWidget *parent) :
     QListView(parent)
 {
@@ -13,10 +11,10 @@ Filmstrip::Filmstrip(QWidget *parent) :
   dir = QDir("../content/images/");
   QStringList imgExts;
   imgExts << "*.png" << "*.jpg" << "*.jpeg";
-  QStringList stringList = dir.entryList(imgExts);
+  fileNames = dir.entryList(imgExts);
 
-  for (int i = 0; i < stringList.size(); i++) {
-    QImage img (dir.filePath(stringList.at(i)));
+  for (int i = 0; i < fileNames.size(); i++) {
+    QImage img (dir.filePath(fileNames.at(i)));
     images.append(img.scaledToWidth(250));
   }
 

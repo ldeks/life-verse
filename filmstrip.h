@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QListView>
 #include <QVector>
+#include <QStringList>
 
 #include "imagelistmodel.h"
 
@@ -18,6 +19,7 @@ class Filmstrip : public QListView
 
   private:
     QDir dir;
+    QStringList fileNames;
     ImageListModel* imgModel;
     QVector<QImage> images;
 };
