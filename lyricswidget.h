@@ -17,6 +17,7 @@ class LyricsWidget : public QWidget
     ~LyricsWidget();
 
     bool eventFilter(QObject* watched, QEvent* event);
+    int currentIndex() { return lyricsView->currentIndex().row(); }
 
   public slots:
     void setLyrics(QStringList lyrics, QStringList order);

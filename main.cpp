@@ -13,7 +13,5 @@ int main(int argc, char *argv[])
     m.setMainRenderer(&r);
     m.show();
 
-    QObject::connect(&m, &MainWindow::syncHtml, &r, &Renderer::setHtml);
-
     return a.exec();
 }

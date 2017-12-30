@@ -4,11 +4,11 @@
 #include <QKeyEvent>
 #include <QVector>
 
-#include "deck.h"
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), mainRenderer(NULL)
 {
+  songDeck = new Deck(this);
+
   // Central Widget
   mainSplitter = new QSplitter(this);
   leftSplitter = new QSplitter(Qt::Vertical, mainSplitter);
@@ -53,6 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
           this, &MainWindow::transferSimpleKeyPress);
   connect(lyricsWidget, &LyricsWidget::slideSelected,
           this, &MainWindow::transferMouseClick);
+  connect(filmstrip, &Filmstrip::imageSelected,
+          this, &MainWindow::renderImage);
 }
 
 MainWindow::~MainWindow()
@@ -60,14 +62,28 @@ MainWindow::~MainWindow()
 }
 
 void
-MainWindow::renderSong(Song* song)
+MainWindow::render()
 {
-  Deck songDeck;
-  songDeck.setSections(song->toDeckSections());
-  QString html = songDeck.genHtml();
+  QString html = songDeck->genHtml();
   QUrl url = QUrl::fromLocalFile("/home/laura/programming/life-verse/");
   previewRenderer->setHtml(html, url);
-  emit syncHtml(html, url);
+  mainRenderer->setHtml(html, url);
+}
+
+void
+MainWindow::renderSong(Song* song)
+{
+  songDeck->setSections(song->toDeckSections());
+  render();
+}
+
+void
+MainWindow::renderImage(const QString &name)
+{
+  int idx = lyricsWidget->currentIndex();
+  songDeck->setStillLink(name);
+  render();
+  transferMouseClick(idx);
 }
 
 void

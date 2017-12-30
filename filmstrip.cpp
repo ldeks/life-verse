@@ -21,8 +21,16 @@ Filmstrip::Filmstrip(QWidget *parent) :
   imgModel = new ImageListModel(this);
   imgModel->setImages(images);
   setModel(imgModel);
+
+  connect(this, &Filmstrip::clicked, this, &Filmstrip::serveImageName);
 }
 
 Filmstrip::~Filmstrip()
 {
+}
+
+void
+Filmstrip::serveImageName(const QModelIndex &index)
+{
+  emit imageSelected("content/images/" + fileNames.at(index.row()));
 }

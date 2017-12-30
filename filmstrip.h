@@ -17,6 +17,12 @@ class Filmstrip : public QListView
     explicit Filmstrip(QWidget *parent = 0);
     ~Filmstrip();
 
+  public slots:
+    void serveImageName(const QModelIndex &index);
+
+  signals:
+    void imageSelected(const QString &name);
+
   private:
     QDir dir;
     QStringList fileNames;

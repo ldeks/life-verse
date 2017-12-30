@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "deck.h"
 #include "filmstrip.h"
 #include "renderer.h"
 #include "lyricswidget.h"
@@ -27,16 +28,17 @@ class MainWindow : public QMainWindow
 
   public slots:
     void renderSong(Song* song);
+    void renderImage(const QString &name);
     void setLyrics(Song* song);
     void transferSimpleKeyPress(int key);
     void transferMouseClick(int idx);
 
-  signals:
-    void syncHtml(QString html, QUrl url);
-
   private:
+    void render();
+
     //External
     Renderer* mainRenderer; // Does NOT own!
+    Deck* songDeck;
 
     //Central widget
     QSplitter* mainSplitter;
