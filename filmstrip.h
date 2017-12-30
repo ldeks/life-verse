@@ -2,9 +2,11 @@
 #define FILMSTRIP_H
 
 #include <QDir>
+#include <QImage>
 #include <QListView>
-#include <QStringList>
-#include <QStringListModel>
+#include <QVector>
+
+#include "imagelistmodel.h"
 
 class Filmstrip : public QListView
 {
@@ -16,8 +18,8 @@ class Filmstrip : public QListView
 
   private:
     QDir dir;
-    QStringList stringList;
-    QStringListModel* model;
+    ImageListModel* imgModel;
+    QVector<QImage> images;
 };
 
 #endif // FILMSTRIP_H

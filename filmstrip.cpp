@@ -1,15 +1,27 @@
 #include "filmstrip.h"
 
+#include <QStringList>
+
 Filmstrip::Filmstrip(QWidget *parent) :
     QListView(parent)
 {
-  model = new QStringListModel(this);
-  setModel(model);
   setFlow(QListView::LeftToRight);
   setUniformItemSizes(true);
+  setIconSize(QSize(250, 141));
 
   dir = QDir("../content/images/");
-  model->setStringList(dir.entryList(QDir::Files));
+  QStringList imgExts;
+  imgExts << "*.png" << "*.jpg" << "*.jpeg";
+  QStringList stringList = dir.entryList(imgExts);
+
+  for (int i = 0; i < stringList.size(); i++) {
+    QImage img (dir.filePath(stringList.at(i)));
+    images.append(img.scaledToWidth(250));
+  }
+
+  imgModel = new ImageListModel(this);
+  imgModel->setImages(images);
+  setModel(imgModel);
 }
 
 Filmstrip::~Filmstrip()

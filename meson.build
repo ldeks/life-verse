@@ -6,13 +6,15 @@ inc = include_directories('')
 moc_files = qt5.preprocess(
   moc_headers : ['renderer.h', 'darkpopupwidget.h',
                  'deck.h', 'song.h', 'mainwindow.h', 'playlist-view.h',
-                 'songslist.h', 'lyricswidget.h', 'filmstrip.h'],
+                 'songslist.h', 'lyricswidget.h', 'filmstrip.h',
+                 'imagelistmodel.h'],
   include_directories: inc
 )
 executable(
   'life-verse', 'main.cpp', 'renderer.cpp',
   'darkpopupwidget.cpp','deck.cpp', 'song.cpp', 'mainwindow.cpp',
   'playlist-view.cpp', 'songslist.cpp', 'lyricswidget.cpp', 'filmstrip.cpp',
+  'imagelistmodel.cpp',
   moc_files,
   include_directories: inc,
   dependencies : qt5_dep
