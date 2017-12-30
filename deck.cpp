@@ -11,7 +11,7 @@ Deck::Deck(QObject *parent) :
   fontSize = 100;
   fontUnit = "px";
   opacity = 0.8;
-  stillLink = "../geo5.jpg";
+  stillLink = "../content/images/geo5.jpg";
   sections.append("Say something meaningful<br>with Life Verse.");
   sections.append("It's all you need<br>and nothing more.");
   sections.append("With no artificial features<br>or premature optimizations.");
@@ -73,7 +73,7 @@ Deck::genHtml() {
   }
 
   if (!stillLink.isEmpty()) {
-    out <<  "      <img width=\"1600\" height=\"900\" src=\"geo5.jpg\"/>\n";
+    out <<  "      <img width=\"1600\" height=\"900\" src=\"content/images/geo5.jpg\"/>\n";
   }
   
   // Text section stuff.
