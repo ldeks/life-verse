@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QKeyEvent>
+#include <QTimer>
 #include <QVector>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -83,7 +84,8 @@ MainWindow::renderImage(const QString &name)
   int idx = lyricsWidget->currentIndex();
   songDeck->setStillLink(name);
   render();
-  transferMouseClick(idx);
+  // We need to give the web engine some time to reload the page.
+  QTimer::singleShot(100, [=] { transferMouseClick(idx); });
 }
 
 void
