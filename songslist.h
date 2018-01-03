@@ -4,8 +4,10 @@
 #include <QListView>
 #include <QMouseEvent>
 #include <QFileSystemModel>
+#include <QVBoxLayout>
+#include <QWidget>
 
-class SongsList : public QListView
+class SongsList : public QWidget
 {
     Q_OBJECT
 
@@ -14,6 +16,8 @@ class SongsList : public QListView
     ~SongsList();
 
   private:
+    QVBoxLayout* vLayout;
+    QListView* list;
     QFileSystemModel* model;
 };
 
