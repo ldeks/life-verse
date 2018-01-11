@@ -7,17 +7,53 @@ SongsList::SongsList(QWidget *parent) :
   setLayout(vLayout);
   list = new QListView(this);
 
-  model = new QFileSystemModel(this);
-  model->setRootPath("../content/songs/");
+  dir = QDir("../content/songs/");
+  filenames = dir.entryList(QDir::Files | QDir::NoDotAndDotDot);
+  model = new SongsListModel(this);
+  model->setFilePath(dir.absolutePath() + "/");
+  model->setFileNames(filenames);
+  model->setStringList(filenames.replaceInStrings("-", " "));
 
-  list->setModel(model);
-  list->setRootIndex(model->index("../content/songs/"));
+  proxyModel = new QSortFilterProxyModel(this);
+  proxyModel->setSourceModel(model);
+  proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
+  list->setModel(proxyModel);
   list->setMovement(QListView::Free);
   list->setDragEnabled(true);
 
+  filter = new QLineEdit(this);
+  filter->setClearButtonEnabled(true);
+  filter->setPlaceholderText("Search songs");
+
+  vLayout->addWidget(filter);
   vLayout->addWidget(list);
+
+  connect(filter, &QLineEdit::textChanged,
+          proxyModel, &QSortFilterProxyModel::setFilterFixedString);
 }
 
 SongsList::~SongsList()
 {
+}
+
+SongsListModel::SongsListModel(QWidget *parent) :
+    QStringListModel(parent)
+{
+}
+
+SongsListModel::~SongsListModel()
+{
+}
+
+QMimeData*
+SongsListModel::mimeData(const QModelIndexList &indexes) const
+{
+  if (indexes.size() != 1) // Two or more doesn't make sense here.
+    return 0;
+
+  QMimeData* data = new QMimeData();
+  data->setText(path + fileNames.at(indexes.at(0).row()));
+
+  return data;
 }

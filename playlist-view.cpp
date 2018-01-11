@@ -33,7 +33,7 @@ void
 PlaylistView::dropEvent(QDropEvent* e)
 {
   Song* song = new Song();
-  QString str = e->mimeData()->text().mid(7);
+  QString str = e->mimeData()->text();
   if (!song->loadFromFile(str)) {
     delete song;
     return;
