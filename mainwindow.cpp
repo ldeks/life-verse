@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
   songsList = new SongsList(mediaTabs);
   bibles = new QWidget(mediaTabs);
   mediaTabs->addTab(songsList, "Songs");
-  mediaTabs->addTab(bibles, "Bibles");
+  // mediaTabs->addTab(bibles, "Bibles");
 
   // Right side.
   lyricsWidget = new LyricsWidget(rightSplitter);
