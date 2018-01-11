@@ -13,7 +13,7 @@
 #include "filmstrip.h"
 #include "renderer.h"
 #include "lyricswidget.h"
-#include "playlist-view.h"
+#include "playlist-widget.h"
 #include "songslist.h"
 
 class MainWindow : public QMainWindow
@@ -46,10 +46,7 @@ class MainWindow : public QMainWindow
     //Left side
     QSplitter* leftSplitter;
     //Playlist
-    QWidget* playlistWidget;
-    QVBoxLayout* playlistLayout;
-    QLabel* playlistLabel;
-    PlaylistView* playlistView;
+    PlaylistWidget* playlistWidget;
     //Media tabs.
     QTabWidget* mediaTabs;
     SongsList* songsList;

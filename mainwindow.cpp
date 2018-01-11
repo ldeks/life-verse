@@ -19,18 +19,10 @@ MainWindow::MainWindow(QWidget *parent) :
   setCentralWidget(mainSplitter);
 
   // Left side.
-  playlistWidget = new QWidget(leftSplitter);
+  playlistWidget = new PlaylistWidget(leftSplitter);
   mediaTabs = new QTabWidget(leftSplitter);
   leftSplitter->addWidget(playlistWidget);
   leftSplitter->addWidget(mediaTabs);
-
-  // Playlist
-  playlistLayout = new QVBoxLayout(playlistWidget);
-  playlistLabel = new QLabel("Playlist", playlistWidget);
-  playlistView = new PlaylistView(playlistWidget);
-  playlistLayout->addWidget(playlistLabel);
-  playlistLayout->addWidget(playlistView);
-  playlistWidget->setLayout(playlistLayout);
 
   // Media tabs.
   songsList = new SongsList(mediaTabs);
@@ -46,9 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
   rightSplitter->addWidget(previewRenderer);
   rightSplitter->addWidget(filmstrip);
 
-  connect(playlistView, &PlaylistView::songSelected,
+  connect(playlistWidget, &PlaylistWidget::songSelected,
           this, &MainWindow::renderSong);
-  connect(playlistView, &PlaylistView::songSelected,
+  connect(playlistWidget, &PlaylistWidget::songSelected,
           this, &MainWindow::setLyrics);
   connect(lyricsWidget, &LyricsWidget::simpleKeyPress,
           this, &MainWindow::transferSimpleKeyPress);
