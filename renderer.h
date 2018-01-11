@@ -42,21 +42,21 @@ private:
     QGraphicsScene* scene;
     QString html;
 
-    // The button bar.
-    DarkPopupWidget* toolbar;
-    QHBoxLayout* toolbarLayout;
-    QAction* bold;
-    QToolButton* boldButton;
-    QAction* italic;
-    QToolButton* italicButton;
-    QFontComboBox* fontCombo;
+    //  // The button bar.
+    //  DarkPopupWidget* toolbar;
+    //  QHBoxLayout* toolbarLayout;
+    //  QAction* bold;
+    //  QToolButton* boldButton;
+    //  QAction* italic;
+    //  QToolButton* italicButton;
+    //  QFontComboBox* fontCombo;
 
-    // Service item list.
-    DarkPopupWidget* listWidget;
-    QVBoxLayout* listLayout;
-    QListView* listView;
-    QStringListModel* listModel;
-    QPushButton* addButton;
+    //  // Service item list.
+    //  DarkPopupWidget* listWidget;
+    //  QVBoxLayout* listLayout;
+    //  QListView* listView;
+    //  QStringListModel* listModel;
+    //  QPushButton* addButton;
 };
 
 #endif // RENDERER_H
