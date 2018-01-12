@@ -12,7 +12,8 @@ SongsList::SongsList(QWidget *parent) :
   model = new SongsListModel(this);
   model->setFilePath(dir.absolutePath() + "/");
   model->setFileNames(filenames);
-  model->setStringList(filenames.replaceInStrings("-", " "));
+  QStringList prettyNames = filenames; // ReplaceInStrings works in place.
+  model->setStringList(prettyNames.replaceInStrings("-", " "));
 
   proxyModel = new QSortFilterProxyModel(this);
   proxyModel->setSourceModel(model);
@@ -56,4 +57,17 @@ SongsListModel::mimeData(const QModelIndexList &indexes) const
   data->setText(path + fileNames.at(indexes.at(0).row()));
 
   return data;
+}
+
+void
+SongsList::getSong()
+{
+  if (!list->currentIndex().isValid())
+    return;
+
+  // I need to convert through the proxy path.
+  QString str = list->currentIndex().data().toString();
+  int row = model->stringList().indexOf(QRegExp(str));
+  emit sendSongPath(dir.absolutePath() + "/"
+    + filenames.at(row));
 }

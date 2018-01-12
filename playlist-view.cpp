@@ -32,9 +32,16 @@ PlaylistView::dragMoveEvent(QDragMoveEvent* e)
 void
 PlaylistView::dropEvent(QDropEvent* e)
 {
-  Song* song = new Song();
   QString str = e->mimeData()->text();
-  if (!song->loadFromFile(str)) {
+  addSong(str);
+  e->acceptProposedAction();
+}
+
+void
+PlaylistView::addSong(const QString& filename)
+{
+  Song* song = new Song();
+  if (!song->loadFromFile(filename)) {
     delete song;
     return;
   }
@@ -44,11 +51,30 @@ PlaylistView::dropEvent(QDropEvent* e)
   model->setStringList(strings);
   setCurrentIndex(model->index(strings.size() - 1));
   emit songSelected(song);
-  e->acceptProposedAction();
 }
 
 void
 PlaylistView::serveSong(const QModelIndex &index)
 {
   emit songSelected(songs.at(index.row()));
+}
+
+void
+PlaylistView::removeSong()
+{
+  if (strings.size() < 1)
+    return;
+
+  int row = currentIndex().row();
+  strings.removeAt(row);
+  model->setStringList(strings);
+  delete songs.at(row);
+  songs.removeAt(row);
+
+  int lastIdx = songs.size() - 1;
+  if (lastIdx >= 0)
+  {
+    setCurrentIndex(model->index(lastIdx));
+    emit songSelected(songs.at(lastIdx));
+  }
 }

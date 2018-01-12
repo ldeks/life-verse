@@ -48,6 +48,10 @@ MainWindow::MainWindow(QWidget *parent) :
           this, &MainWindow::transferMouseClick);
   connect(filmstrip, &Filmstrip::imageSelected,
           this, &MainWindow::renderImage);
+  connect(playlistWidget, &PlaylistWidget::requestSong,
+          songsList, &SongsList::getSong);
+  connect(songsList, &SongsList::sendSongPath,
+          playlistWidget, &PlaylistWidget::addSong);
 }
 
 MainWindow::~MainWindow()

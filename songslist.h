@@ -38,6 +38,12 @@ class SongsList : public QWidget
     explicit SongsList(QWidget *parent = 0);
     ~SongsList();
 
+  signals:
+    void sendSongPath(const QString& str);
+
+  public slots:
+    void getSong();
+
   private:
     QDir dir;
     QVBoxLayout* vLayout;

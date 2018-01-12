@@ -2,11 +2,11 @@
 #define PLAYLISTVIEW_H
 
 #include <QDropEvent>
+#include <QList>
 #include <QListView>
 #include <QMimeData>
 #include <QStringList>
 #include <QStringListModel>
-#include <QVector>
 
 #include "song.h"
 
@@ -22,6 +22,10 @@ class PlaylistView : public QListView
     void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
 
+  public slots:
+    void addSong(const QString& filename);
+    void removeSong();
+
   protected slots:
     void serveSong(const QModelIndex &index);
 
@@ -31,7 +35,7 @@ class PlaylistView : public QListView
   private:
     QStringListModel* model;
     QStringList strings;
-    QVector<Song*> songs;
+    QList<Song*> songs;
 };
 
 #endif // PLAYLISTVIEW_H
