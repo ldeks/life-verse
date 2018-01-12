@@ -67,6 +67,8 @@ SongsList::getSong()
 
   // I need to convert through the proxy path.
   QString str = list->currentIndex().data().toString();
+  str.replace("(", "."); // Need for QRegExp.
+  str.replace(")", ".");
   int row = model->stringList().indexOf(QRegExp(str));
   emit sendSongPath(dir.absolutePath() + "/"
     + filenames.at(row));
