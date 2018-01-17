@@ -32,6 +32,12 @@ class PlaylistWidget : public QWidget
     PlaylistView* view;
     QWidget* toolbar;
     QHBoxLayout* toolbarLayout;
+    QAction* newPlaylist;
+    QToolButton* newPlaylistButton;
+    QAction* save;
+    QToolButton* saveButton;
+    QAction* open;
+    QToolButton* openButton;
     QWidget* spacer;
     QAction* add;
     QToolButton* addButton;

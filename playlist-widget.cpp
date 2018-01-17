@@ -25,9 +25,27 @@ PlaylistWidget::PlaylistWidget(QWidget *parent) :
   removeButton = new QToolButton(toolbar);
   removeButton->setDefaultAction(remove);
   removeButton->setAutoRaise(true);
+  save = new QAction(QIcon("../tango-icons/document-save.png"),
+    "&Save", toolbar);
+  saveButton = new QToolButton(toolbar);
+  saveButton->setDefaultAction(save);
+  saveButton->setAutoRaise(true);
+  open = new QAction(QIcon("../tango-icons/document-open.png"),
+    "&Open", toolbar);
+  openButton = new QToolButton(toolbar);
+  openButton->setDefaultAction(open);
+  openButton->setAutoRaise(true);
+  newPlaylist = new QAction(QIcon("../tango-icons/document-new.png"),
+    "&New", toolbar);
+  newPlaylistButton = new QToolButton(toolbar);
+  newPlaylistButton->setDefaultAction(newPlaylist);
+  newPlaylistButton->setAutoRaise(true);
   spacer = new QWidget(toolbar);
   spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
 
+  toolbarLayout->addWidget(openButton);
+  toolbarLayout->addWidget(saveButton);
+  toolbarLayout->addWidget(newPlaylistButton);
   toolbarLayout->addWidget(spacer);
   toolbarLayout->addWidget(addButton);
   toolbarLayout->addWidget(removeButton);
