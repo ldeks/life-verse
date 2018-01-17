@@ -29,8 +29,8 @@ Song::getStanzas(QString key) {
 }
 
 bool
-Song::loadFromFile(QString filename) {
-  QFile file (filename);
+Song::loadFromFile(QString fname) {
+  QFile file (fname);
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     return false;
 
@@ -93,6 +93,7 @@ Song::loadFromFile(QString filename) {
     stanzas[currentSelfClosingTag].append(currentStanza.trimmed());
 
   file.close();
+  filename = fname;
 
   return true;
 }

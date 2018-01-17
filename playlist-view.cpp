@@ -78,3 +78,14 @@ PlaylistView::removeSong()
     emit songSelected(songs.at(lastIdx));
   }
 }
+
+QStringList
+PlaylistView::getFilenames()
+{
+  QStringList fnames;
+  for (int i = 0; i < songs.length(); i++) {
+    fnames << songs.at(i)->getFilename();
+  }
+
+  return fnames;
+}

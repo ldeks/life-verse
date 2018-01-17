@@ -19,12 +19,15 @@ class PlaylistWidget : public QWidget
     explicit PlaylistWidget(QWidget *parent = 0);
     ~PlaylistWidget();
 
+    bool savePlaylistAs(QString fname);
+
   signals:
     void songSelected(Song* song);
     void requestSong();
 
   public slots:
     void addSong(const QString& str);
+    void savePlaylist();
 
   private:
     QVBoxLayout* layout;

@@ -14,13 +14,14 @@ public:
   explicit Song(QObject *parent = 0);
   ~Song();
 
-  bool loadFromFile(QString filename);
+  bool loadFromFile(QString fname);
   QStringList toDeckSections();
   QStringList toLyricSections(); // unrolled
   QStringList getLyricOrder(); // unrolled
   QString getTitle() { return title; }
   QString getAuthor() { return author; }
   QStringList getOrder() { return order; }
+  QString getFilename() { return filename; }
   QStringList getStanzas(QString key);
 
 private:
@@ -34,6 +35,7 @@ private:
   QString title;
   QString author;
   QStringList order;
+  QString filename;
   // Tag string as key, slides in a list as value
   QHash<QString, QStringList> stanzas;
   // A translation table for the order mini language.

@@ -1,6 +1,9 @@
 #include "playlist-widget.h"
 
 #include <QSizePolicy>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) :
     QWidget(parent)
@@ -56,6 +59,8 @@ PlaylistWidget::PlaylistWidget(QWidget *parent) :
           view, &PlaylistView::removeSong);
   connect(addButton, &QToolButton::clicked,
           this, &PlaylistWidget::requestSong);
+  connect(saveButton, &QToolButton::clicked,
+          this, &PlaylistWidget::savePlaylist);
 }
 
 PlaylistWidget::~PlaylistWidget()
@@ -66,4 +71,37 @@ void
 PlaylistWidget::addSong(const QString& str)
 {
   view->addSong(str);
+}
+
+void
+PlaylistWidget::savePlaylist()
+{
+  QString fname = QFileDialog::getSaveFileName(this, "Save File",
+    "../content/playlists/unnamed-playlist");
+
+  if (fname.isEmpty())
+    return;
+
+  if (!savePlaylistAs(fname))
+    return;
+
+  int pos = fname.indexOf("content/playlists/")
+    + QString("content/playlists/").size();
+
+  label->setText("Playlist - " + fname.mid(pos));
+}
+
+bool
+PlaylistWidget::savePlaylistAs(QString fname)
+{
+  QFile file (fname);
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    return false;
+
+  QTextStream out(&file);
+  out << "<!DOCTYPE life-verse-playlist-0.1/>" << "\n";
+  out << view->getFilenames().join("\n");
+  file.close();
+
+  return true;
 }

@@ -22,6 +22,8 @@ class PlaylistView : public QListView
     void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
 
+    QStringList getFilenames();
+
   public slots:
     void addSong(const QString& filename);
     void removeSong();
