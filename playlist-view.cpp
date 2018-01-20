@@ -1,7 +1,7 @@
 #include "playlist-view.h"
 
 PlaylistView::PlaylistView(QWidget *parent) :
-    QListView(parent)
+    QListView(parent), modified(false)
 {
   setMovement(QListView::Free);
   setResizeMode(QListView::Adjust);
@@ -51,12 +51,50 @@ PlaylistView::addSong(const QString& filename)
   model->setStringList(strings);
   setCurrentIndex(model->index(strings.size() - 1));
   emit songSelected(song);
+  modified = true;
+  emit hasBeenModified();
+}
+
+void
+PlaylistView::addSongs(const QStringList& fnames)
+{
+  if (fnames.isEmpty())
+    return;
+
+  for (int i = 0; i < fnames.size(); i++) {
+    Song* song = new Song();
+    if (!song->loadFromFile(fnames.at(i))) {
+      delete song;
+      continue;
+    }
+
+    songs.append(song);
+    strings << song->getTitle();
+  }
+  model->setStringList(strings);
+  setCurrentIndex(model->index(strings.size() - 1));
+  emit songSelected(songs.at(songs.size() - 1));
+  modified = true;
+  emit hasBeenModified();
 }
 
 void
 PlaylistView::serveSong(const QModelIndex &index)
 {
   emit songSelected(songs.at(index.row()));
+}
+
+void
+PlaylistView::clear()
+{
+  strings.clear();
+  model->setStringList(strings);
+  int length = songs.size();
+  for (int i = 0; i < length; i++) {
+    delete songs.at(i);
+  }
+  songs.clear();
+  modified = false;
 }
 
 void
@@ -70,6 +108,8 @@ PlaylistView::removeSong()
   model->setStringList(strings);
   delete songs.at(row);
   songs.removeAt(row);
+  modified = true;
+  emit hasBeenModified();
 
   int lastIdx = songs.size() - 1;
   if (lastIdx >= 0)
@@ -88,4 +128,13 @@ PlaylistView::getFilenames()
   }
 
   return fnames;
+}
+
+bool
+PlaylistView::isEmpty()
+{
+  if (strings.isEmpty())
+    return true;
+  else
+    return false;
 }

@@ -23,9 +23,14 @@ class PlaylistView : public QListView
     void dropEvent(QDropEvent* e);
 
     QStringList getFilenames();
+    bool isEmpty();
+    bool isModified() { return modified; }
+    void setModified(bool m) { modified = m; }
 
   public slots:
     void addSong(const QString& filename);
+    void addSongs(const QStringList& fnames);
+    void clear();
     void removeSong();
 
   protected slots:
@@ -33,11 +38,13 @@ class PlaylistView : public QListView
 
   signals:
     void songSelected(Song* song);
+    void hasBeenModified();
 
   private:
     QStringListModel* model;
     QStringList strings;
     QList<Song*> songs;
+    bool modified;
 };
 
 #endif // PLAYLISTVIEW_H

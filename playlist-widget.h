@@ -27,7 +27,10 @@ class PlaylistWidget : public QWidget
 
   public slots:
     void addSong(const QString& str);
+    void createNewPlaylist();
+    void openPlaylist();
     void savePlaylist();
+    void setModifiedLabel();
 
   private:
     QVBoxLayout* layout;
@@ -46,6 +49,8 @@ class PlaylistWidget : public QWidget
     QToolButton* addButton;
     QAction* remove;
     QToolButton* removeButton;
+    bool saved;
+    QString saveName;
 };
 
 #endif // PLAYLISTWIDGET_H

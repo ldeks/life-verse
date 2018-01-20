@@ -3,10 +3,11 @@
 #include <QSizePolicy>
 #include <QFile>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QTextStream>
 
 PlaylistWidget::PlaylistWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent), saved(false)
 {
   layout = new QVBoxLayout(this);
   label = new QLabel("Playlist", this);
@@ -61,6 +62,12 @@ PlaylistWidget::PlaylistWidget(QWidget *parent) :
           this, &PlaylistWidget::requestSong);
   connect(saveButton, &QToolButton::clicked,
           this, &PlaylistWidget::savePlaylist);
+  connect(newPlaylistButton, &QToolButton::clicked,
+          this, &PlaylistWidget::createNewPlaylist);
+  connect(view, &PlaylistView::hasBeenModified,
+          this, &PlaylistWidget::setModifiedLabel);
+  connect(openButton, &QToolButton::clicked,
+          this, &PlaylistWidget::openPlaylist);
 }
 
 PlaylistWidget::~PlaylistWidget()
@@ -74,21 +81,37 @@ PlaylistWidget::addSong(const QString& str)
 }
 
 void
+PlaylistWidget::setModifiedLabel()
+{
+  QString fileLabel = label->text();
+  if (fileLabel.at(fileLabel.size() - 1) != "*")
+    label->setText(label->text() + "*");
+  saved = false;
+}
+
+void
 PlaylistWidget::savePlaylist()
 {
-  QString fname = QFileDialog::getSaveFileName(this, "Save File",
-    "../content/playlists/unnamed-playlist");
-
-  if (fname.isEmpty())
+  if (saved && !view->isModified())
     return;
 
-  if (!savePlaylistAs(fname))
+  if (saveName.isEmpty())
+  {
+    saveName = QFileDialog::getSaveFileName(this, "Save File",
+      "../content/playlists/unnamed-playlist");
+
+    if (saveName.isEmpty())
+      return;
+  }
+
+  if (!savePlaylistAs(saveName))
     return;
 
-  int pos = fname.indexOf("content/playlists/")
+  int pos = saveName.indexOf("content/playlists/")
     + QString("content/playlists/").size();
 
-  label->setText("Playlist - " + fname.mid(pos));
+  label->setText("Playlist - " + saveName.mid(pos));
+  saved = true;
 }
 
 bool
@@ -104,4 +127,71 @@ PlaylistWidget::savePlaylistAs(QString fname)
   file.close();
 
   return true;
+}
+
+void
+PlaylistWidget::createNewPlaylist()
+{
+  if (view->isEmpty())
+    return;
+
+  if (!saved && view->isModified())
+  {
+    QMessageBox::StandardButton ret;
+    ret = QMessageBox::question(this, "Playlist not saved.",
+      "Would you like to save the current playlist?",
+      QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
+      QMessageBox::Save);
+    if (ret == QMessageBox::Cancel) {
+      return;
+    }
+    else if (ret == QMessageBox::Save) {
+      savePlaylist();
+      if (!saved)
+        return;
+    }
+  }
+
+  label->setText("Playlist");
+  view->clear();
+  saveName = QString();
+  saved = true;
+}
+
+void
+PlaylistWidget::openPlaylist()
+{
+  createNewPlaylist();
+  if (!view->isEmpty())
+    return;
+
+  QString fname = QFileDialog::getOpenFileName(this, "Open File",
+    "../content/playlists/");
+
+  if (fname.isEmpty())
+    return;
+
+  QFile file (fname);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    return;
+
+  QTextStream in(&file);
+  QString magicString = in.readLine();
+  QStringList songNames;
+  if (magicString == "<!DOCTYPE life-verse-playlist-0.1/>")
+  {
+    while (!in.atEnd()) {
+      songNames << in.readLine();
+    }
+  }
+  file.close();
+
+  view->addSongs(songNames);
+  int pos = fname.indexOf("content/playlists/")
+    + QString("content/playlists/").size();
+
+  label->setText("Playlist - " + fname.mid(pos));
+  view->setModified(false);
+  saved = true;
+  saveName = fname;
 }
