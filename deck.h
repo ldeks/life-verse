@@ -27,6 +27,8 @@ private:
   QString fontFamily;
   int fontSize;
   QString fontUnit;
+  QString fontWeight;
+  QString textShadowString;
   float opacity;
   QString stillLink;
   QString videoLink;

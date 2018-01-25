@@ -10,6 +10,8 @@ Deck::Deck(QObject *parent) :
   fontFamily = "Quicksand";
   fontSize = 100;
   fontUnit = "px";
+  fontWeight = "500";
+  textShadowString = "2px 2px 8px #303030";
   opacity = 0.8;
   stillLink = "content/images/geo5.jpg";
   sections.append("Say something meaningful<br>with Life Verse.");
@@ -49,6 +51,8 @@ Deck::genHtml() {
       << "   font-size: " << fontSize << fontUnit << ";\n"
       << "   color: rgb(" << fontColor.red() << ", " << fontColor.green() << ", " << fontColor.blue() << ");\n"
       << "   opacity: " << opacity << ";\n"
+      << "   font-weight: " << fontWeight << ";\n"
+      << "   text-shadow: " << textShadowString << ";\n"
       << "}\n"
       // Need this section so video spans whole view.
       // reveal.js themes set this to 95%.
