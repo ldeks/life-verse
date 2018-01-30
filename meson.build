@@ -4,7 +4,7 @@ qt5_dep = dependency('qt5', modules: ['Core', 'Gui', 'Widgets', 'WebEngine',
 'WebEngineWidgets'])
 inc = include_directories('')
 moc_files = qt5.preprocess(
-  moc_headers : ['renderer.h', 'darkpopupwidget.h',
+  moc_headers : ['renderer.h',
                  'deck.h', 'song.h', 'mainwindow.h', 'playlist-view.h',
                  'songslist.h', 'lyricswidget.h', 'filmstrip.h',
                  'imagelistmodel.h', 'playlist-widget.h'],
@@ -12,7 +12,7 @@ moc_files = qt5.preprocess(
 )
 executable(
   'life-verse', 'main.cpp', 'renderer.cpp',
-  'darkpopupwidget.cpp','deck.cpp', 'song.cpp', 'mainwindow.cpp',
+  'deck.cpp', 'song.cpp', 'mainwindow.cpp',
   'playlist-view.cpp', 'songslist.cpp', 'lyricswidget.cpp', 'filmstrip.cpp',
   'imagelistmodel.cpp', 'playlist-widget.cpp',
   moc_files,
