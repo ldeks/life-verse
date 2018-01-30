@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include <QCoreApplication>
+#include <QDir>
 
 #include "deck.h"
 
@@ -10,7 +11,7 @@ Renderer::Renderer(QWidget *parent) :
   Deck defaultDeck;
   // The QUrl tells it where to go and find Reveal.js.
   setHtml(defaultDeck.genHtml(),
-        QUrl::fromLocalFile("/home/laura/programming/life-verse/"));
+        QUrl::fromLocalFile(QDir::currentPath() + "/../"));
 
   /*
    * Locate the event receiver.
