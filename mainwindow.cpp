@@ -104,9 +104,11 @@ MainWindow::transferSimpleKeyPress(int key)
    }
    // Must be separate because sendEvent takes ownership.
    QKeyEvent previewRendererKey (QEvent::KeyPress, key, Qt::NoModifier);
-   QApplication::sendEvent(previewRenderer, &previewRendererKey);
+   QApplication::sendEvent(previewRenderer->getEventReceiver(),
+                           &previewRendererKey);
    QKeyEvent rendererKey (QEvent::KeyPress, key, Qt::NoModifier);
-   QApplication::sendEvent(mainRenderer, &rendererKey);
+   QApplication::sendEvent(mainRenderer->getEventReceiver(),
+                           &rendererKey);
 }
 
 void
@@ -117,10 +119,10 @@ MainWindow::transferMouseClick(int idx)
    rvec.append(mainRenderer);
    for (int i = 0; i < 2; i++) {
      QKeyEvent home (QEvent::KeyPress, Qt::Key_Home, Qt::NoModifier);
-     QApplication::sendEvent(rvec.at(i), &home);
+     QApplication::sendEvent(rvec.at(i)->getEventReceiver(), &home);
      for (int j = 0; j < idx; j++) {
        QKeyEvent right (QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
-       QApplication::sendEvent(rvec.at(i), &right);
+       QApplication::sendEvent(rvec.at(i)->getEventReceiver(), &right);
      }
    }
 }
