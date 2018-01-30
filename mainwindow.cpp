@@ -53,6 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
           songsList, &SongsList::getSong);
   connect(songsList, &SongsList::sendSongPath,
           playlistWidget, &PlaylistWidget::addSong);
+
+  setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 }
 
 MainWindow::~MainWindow()
@@ -126,4 +128,16 @@ MainWindow::transferMouseClick(int idx)
        QApplication::sendEvent(rvec.at(i)->getEventReceiver(), &right);
      }
    }
+}
+
+void
+MainWindow::keyPressEvent(QKeyEvent* e)
+{
+  if (e->key() == Qt::Key_F11) {
+    if (mainRenderer->isFullScreen())
+      mainRenderer->showNormal();
+    else
+      mainRenderer->showFullScreen();
+  }
+  QMainWindow::keyPressEvent(e);
 }

@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QKeyEvent>
 #include <QLabel>
 #include <QMainWindow>
 #include <QSplitter>
@@ -25,6 +26,7 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
     void setMainRenderer(Renderer* r) { mainRenderer = r; }
+    void keyPressEvent(QKeyEvent* e);
 
   public slots:
     void renderSong(Song* song);
