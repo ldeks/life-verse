@@ -6,6 +6,8 @@
 #include <QTimer>
 #include <QVector>
 
+#include "chromium-renderer.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), mainRenderer(NULL)
 {
@@ -33,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Right side.
   lyricsWidget = new LyricsWidget(rightSplitter);
-  previewRenderer = new Renderer(rightSplitter);
+  previewRenderer = new ChromiumRenderer(rightSplitter);
   filmstrip = new Filmstrip(rightSplitter);
   rightSplitter->addWidget(lyricsWidget);
   rightSplitter->addWidget(previewRenderer);

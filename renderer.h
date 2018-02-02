@@ -3,10 +3,11 @@
 
 #include <QCloseEvent>
 #include <QString>
-#include <QWebEngineView>
+#include <QUrl>
+#include <QVBoxLayout>
 #include <QWidget>
 
-class Renderer : public QWebEngineView
+class Renderer : public QWidget
 {
     Q_OBJECT
 
@@ -16,11 +17,12 @@ public:
 
     void closeEvent(QCloseEvent* e);
 
-    QWidget* getEventReceiver() { return eventReceiver; }
+    virtual QWidget* getEventReceiver() = 0;
 
-private:
-    QString html;
-    QWidget* eventReceiver;
+    virtual void setHtml(QString h, QUrl u) = 0;
+
+protected:
+    QVBoxLayout* layout;
 };
 
 #endif // RENDERER_H
