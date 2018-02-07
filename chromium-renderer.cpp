@@ -35,7 +35,8 @@ ChromiumRenderer::~ChromiumRenderer()
 }
 
 void
-ChromiumRenderer::setHtml(QString h, QUrl u)
+ChromiumRenderer::setDeck(Deck* deck)
 {
-  view->setHtml(h, u);
+  view->setHtml(deck->genHtml(),
+        QUrl::fromLocalFile(QDir::currentPath() + "/../"));
 }

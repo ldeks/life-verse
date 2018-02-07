@@ -7,6 +7,8 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "deck.h"
+
 class Renderer : public QWidget
 {
     Q_OBJECT
@@ -19,7 +21,7 @@ public:
 
     virtual QWidget* getEventReceiver() = 0;
 
-    virtual void setHtml(QString h, QUrl u) = 0;
+    virtual void setDeck(Deck* deck) = 0;
 
 protected:
     QVBoxLayout* layout;

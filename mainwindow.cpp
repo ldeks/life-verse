@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include <QDir>
 #include <QKeyEvent>
 #include <QTimer>
 #include <QVector>
@@ -66,10 +65,8 @@ MainWindow::~MainWindow()
 void
 MainWindow::render()
 {
-  QString html = songDeck->genHtml();
-  QUrl url = QUrl::fromLocalFile(QDir::currentPath() + "/../");
-  previewRenderer->setHtml(html, url);
-  mainRenderer->setHtml(html, url);
+  previewRenderer->setDeck(songDeck);
+  mainRenderer->setDeck(songDeck);
 }
 
 void

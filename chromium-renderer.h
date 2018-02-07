@@ -14,7 +14,7 @@ public:
     ~ChromiumRenderer();
 
     QWidget* getEventReceiver() { return eventReceiver; }
-    void setHtml(QString h, QUrl u);
+    void setDeck(Deck* deck);
 
 private:
     QWebEngineView* view;
