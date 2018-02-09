@@ -125,3 +125,13 @@ void
 Deck::setSections(QStringList text) {
   sections = text;
 }
+
+int
+Deck::getFontShadowSize()
+{
+  QString shadowSize = textShadowString.split(" ").at(0);
+  int unitLoc = 2;
+  if (shadowSize.contains("rem"))
+    unitLoc = 3;
+  return shadowSize.left(shadowSize.size() - unitLoc).toInt();
+}

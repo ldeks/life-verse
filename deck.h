@@ -21,6 +21,14 @@ public:
   void setStillLink(const QString& link) { stillLink = link; }
   void setVideoLink(QString link) { videoLink = link; }
 
+  QString getStillLink() { return stillLink; }
+  QString getFontFamily() { return fontFamily; }
+  int getFontSize() { return fontSize; }
+  QString getFontWeight() { return fontWeight; }
+  int getFontShadowSize();
+  QColor getFontColor() { return fontColor; }
+  QStringList getSections() { return sections; }
+
 private:
   QString filename;
   QColor fontColor;

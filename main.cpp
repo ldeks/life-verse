@@ -1,4 +1,4 @@
-#include "chromium-renderer.h"
+#include "graphicsview-renderer.h"
 #include "mainwindow.h"
 #include <QApplication>
 #include <QObject>
@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    ChromiumRenderer r;
+    GraphicsViewRenderer r;
     r.show();
 
     MainWindow m;
